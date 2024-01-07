@@ -40,8 +40,8 @@ class WileToneCustomButton extends StatelessWidget {
       child: ElevatedButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          minimumSize: MaterialStateProperty.all(
-              Size(buttonWidth, buttonHeight ?? 12.w)),
+          minimumSize:
+              MaterialStateProperty.all(Size(buttonWidth, buttonHeight ?? 52)),
           shape: isBorderShape
               ? MaterialStateProperty.all<RoundedRectangleBorder>(
                   RoundedRectangleBorder(
@@ -61,7 +61,7 @@ class WileToneCustomButton extends StatelessWidget {
           title: buttonName,
           fontSize: fontSize,
           color: isBorderShape ? buttonColor : fontColor,
-          fontWeight: FontWeightClass.semiB,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );

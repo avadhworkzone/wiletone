@@ -5,8 +5,10 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
-import 'package:wilatone_restaurant/view/auth/login_screen.dart';
+import 'package:wilatone_restaurant/view/all_order_screen.dart';
+import 'package:wilatone_restaurant/view/earning_screen.dart';
 import 'package:wilatone_restaurant/view/profile_detail_screen.dart';
+import 'package:wilatone_restaurant/view/sales_screen.dart';
 
 void main() async {
   await GetStorage.init();
@@ -16,8 +18,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
-
-  // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
           fontFamily: AssetsUtils.poppins,
         ),
         debugShowCheckedModeBanner: false,
-        home: const ProfileDetailScreen(),
+        home: const EarningScreen(),
       ),
     );
   }

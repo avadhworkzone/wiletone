@@ -6,5 +6,6 @@ class ColorUtils {
   static const Color black = Colors.black;
   static const Color skyBlue = Color(0xFF2A6CE7);
   static const Color grey = Color(0xFFECECEC);
+  static const Color greyShade1 = Color(0xFF5B5B5B);
   static const Color green = Color(0xFF54D27F);
 }
