@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
-import 'package:wilatone_restaurant/view/auth/login_screen.dart';
 
 import 'view/dashboard/dashboard.dart';
+import 'view/discount_rates.dart';
 
 void main() async {
   await GetStorage.init();
@@ -25,14 +26,17 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return GetMaterialApp(
-      title: VariablesUtils.appName,
-      theme: ThemeData(
-        useMaterial3: true,
-        fontFamily: AssetsUtils.poppins,
+    return ScreenUtilInit(
+      designSize: const Size(390, 844),
+      child: GetMaterialApp(
+        title: VariablesUtils.appName,
+        theme: ThemeData(
+          useMaterial3: true,
+          fontFamily: AssetsUtils.poppins,
+        ),
+        debugShowCheckedModeBanner: false,
+        home: DiscountRates(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: DashBoard(),
     );
   }
 }

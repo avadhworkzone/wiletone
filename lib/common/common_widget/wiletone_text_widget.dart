@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
 

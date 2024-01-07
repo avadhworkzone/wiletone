@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
-import 'package:wilatone_restaurant/utils/extension_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 
 import '../../utils/typedef_utils.dart';
@@ -17,7 +16,10 @@ class WileToneCustomButton extends StatelessWidget {
   final Color buttonColor;
   final double? buttonHeight;
   final double buttonWidth;
+  final double? elevation;
   final bool isBorderShape;
+  final FontWeight? fontWeight;
+  final Widget? icon;
 
   const WileToneCustomButton(
       {Key? key,
@@ -30,6 +32,9 @@ class WileToneCustomButton extends StatelessWidget {
       this.buttonColor = ColorUtils.black,
       this.buttonHeight,
       this.buttonWidth = double.infinity,
+      this.elevation,
+      this.fontWeight,
+      this.icon,
       this.isBorderShape = false})
       : super(key: key);
 
@@ -54,14 +59,24 @@ class WileToneCustomButton extends StatelessWidget {
                     borderRadius: BorderRadius.circular(buttonRadius ?? 8),
                   ),
                 ),
+          elevation:
+              elevation == null ? null : MaterialStateProperty.all(elevation),
           backgroundColor: MaterialStateProperty.all(
               isBorderShape ? ColorUtils.white : buttonColor),
         ),
-        child: WileToneTextWidget(
-          title: buttonName,
-          fontSize: fontSize,
-          color: isBorderShape ? buttonColor : fontColor,
-          fontWeight: FontWeightClass.semiB,
+        child: Row(
+          mainAxisSize: icon != null ? MainAxisSize.max : MainAxisSize.min,
+          mainAxisAlignment:
+              icon != null ? MainAxisAlignment.start : MainAxisAlignment.center,
+          children: [
+            icon ?? const SizedBox(),
+            WileToneTextWidget(
+              title: buttonName,
+              fontSize: fontSize,
+              color: isBorderShape ? buttonColor : fontColor,
+              fontWeight: fontWeight ?? FontWeightClass.semiB,
+            ),
+          ],
         ),
       ),
     );

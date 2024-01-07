@@ -1,12 +1,8 @@
-import 'dart:math';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:intl/intl.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/enum_utils.dart';
-import 'package:wilatone_restaurant/utils/extension_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/validations_utils.dart';
 

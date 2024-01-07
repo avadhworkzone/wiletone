@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:wilatone_restaurant/utils/extension_utils.dart';
 
 class SizeConfig {
   /// HEIGHT
@@ -38,7 +37,9 @@ class SizeConfig {
 
   static Widget sH25() => SizedBox(height: 25.h);
 
-  static Widget sH35() => SizedBox(height: 30.h);
+  static Widget sH30() => SizedBox(height: 30.h);
+
+  static Widget sH35() => SizedBox(height: 35.h);
 
   static Widget sH20() => SizedBox(height: 20.h);
 
@@ -60,6 +61,7 @@ class SizeConfig {
   static Widget sW8() => SizedBox(width: 8.w);
 
   static Widget sW10() => SizedBox(width: 10.w);
+  static Widget sW15() => SizedBox(width: 15.w);
 
   static Widget sW18() => SizedBox(width: 18.w);
 
