@@ -17,4 +17,8 @@ class ConstUtils {
   static String androidPhoneBrand = '';
   static String deviceId = "";
   static String appVersion = "";
+  static String contentPolicies = "https://www.google.com/";
+  static String privacyPolicy = "https://www.google.com/";
+  static String termsOfService = "https://www.google.com/";
+  static const String baseIconAssetsPath = "assets/icons/";
 }

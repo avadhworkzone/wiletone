@@ -7,14 +7,16 @@ import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/login_screen.dart';
 
-void main() async {
-  await GetStorage.init();
+import 'viewModel/connectivity_view_model.dart';
 
-  runApp(const MyApp());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await GetStorage.init();
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
 
@@ -37,4 +39,7 @@ class MyApp extends StatelessWidget {
       ),
     );
   }
+
+  ConnectivityViewModel connectivityViewModel =
+      Get.put(ConnectivityViewModel());
 }
