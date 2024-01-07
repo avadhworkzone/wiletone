@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 import 'view/auth/login_screen.dart';
 import 'view/dashboard/dashboard.dart';
@@ -16,6 +17,12 @@ import 'viewModel/connectivity_view_model.dart';
 import 'package:wilatone_restaurant/view/auth/login_screen.dart';
 import 'package:wilatone_restaurant/view/profile_detail_screen.dart';
 >>>>>>> hardik-dev
+=======
+import 'package:wilatone_restaurant/view/all_order_screen.dart';
+import 'package:wilatone_restaurant/view/earning_screen.dart';
+import 'package:wilatone_restaurant/view/profile_detail_screen.dart';
+import 'package:wilatone_restaurant/view/sales_screen.dart';
+>>>>>>> hardik-dev
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -25,8 +32,6 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-
-  // This widget is the root of your application.
 
   @override
   Widget build(BuildContext context) {
@@ -44,9 +49,13 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
 <<<<<<< HEAD
+<<<<<<< HEAD
         home: LoginScreen(),
 =======
         home: const ProfileDetailScreen(),
+>>>>>>> hardik-dev
+=======
+        home: const EarningScreen(),
 >>>>>>> hardik-dev
       ),
     );

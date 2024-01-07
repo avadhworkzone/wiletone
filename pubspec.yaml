@@ -31,6 +31,10 @@ dependencies:
   intl_phone_field:
     path: packages/intl_phone_field-master
 
+  #charts
+  fl_chart: ^0.66.0
+  syncfusion_flutter_charts:
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

@@ -22,6 +22,7 @@ class ColorUtils {
   static const Color lightGreyE6 = Color(0xffE6E6E6);
 
   static const Color grey = Color(0xFFECECEC);
+  static const Color greyShade1 = Color(0xFF5B5B5B);
   static const Color green = Color(0xFF54D27F);
 
 }

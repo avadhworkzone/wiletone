@@ -56,10 +56,17 @@
       "languageVersion": "2.19"
     },
     {
+<<<<<<< HEAD
       "name": "dbus",
       "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/dbus-0.7.10",
       "packageUri": "lib/",
       "languageVersion": "2.17"
+=======
+      "name": "equatable",
+      "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/equatable-2.0.5",
+      "packageUri": "lib/",
+      "languageVersion": "2.12"
+>>>>>>> hardik-dev
     },
     {
       "name": "fake_async",
@@ -74,8 +81,18 @@
       "languageVersion": "3.0"
     },
     {
+      "name": "fl_chart",
+      "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/fl_chart-0.66.0",
+      "packageUri": "lib/",
+      "languageVersion": "3.2"
+    },
+    {
       "name": "flutter",
+<<<<<<< HEAD
       "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.2/packages/flutter",
+=======
+      "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.3/packages/flutter",
+>>>>>>> hardik-dev
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -105,6 +122,7 @@
     },
     {
       "name": "flutter_test",
+<<<<<<< HEAD
       "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.2/packages/flutter_test",
       "packageUri": "lib/",
       "languageVersion": "3.2"
@@ -112,6 +130,9 @@
     {
       "name": "flutter_web_plugins",
       "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.2/packages/flutter_web_plugins",
+=======
+      "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.3/packages/flutter_test",
+>>>>>>> hardik-dev
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -166,12 +187,15 @@
     {
       "name": "meta",
       "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/meta-1.10.0",
+<<<<<<< HEAD
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
     {
       "name": "nm",
       "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/nm-0.5.0",
+=======
+>>>>>>> hardik-dev
       "packageUri": "lib/",
       "languageVersion": "2.12"
     },
@@ -249,7 +273,11 @@
     },
     {
       "name": "sky_engine",
+<<<<<<< HEAD
       "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.2/bin/cache/pkg/sky_engine",
+=======
+      "rootUri": "file:///Users/dreamworld/Desktop/flutter3.16.3/bin/cache/pkg/sky_engine",
+>>>>>>> hardik-dev
       "packageUri": "lib/",
       "languageVersion": "3.2"
     },
@@ -282,6 +310,18 @@
       "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/string_scanner-1.2.0",
       "packageUri": "lib/",
       "languageVersion": "2.18"
+    },
+    {
+      "name": "syncfusion_flutter_charts",
+      "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/syncfusion_flutter_charts-21.2.4",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
+    },
+    {
+      "name": "syncfusion_flutter_core",
+      "rootUri": "file:///Users/dreamworld/.pub-cache/hosted/pub.dev/syncfusion_flutter_core-21.2.10",
+      "packageUri": "lib/",
+      "languageVersion": "2.17"
     },
     {
       "name": "term_glyph",
@@ -356,7 +396,11 @@
       "languageVersion": "3.1"
     }
   ],
+<<<<<<< HEAD
   "generated": "2024-01-07T12:06:52.904218Z",
+=======
+  "generated": "2024-01-07T12:18:59.676982Z",
+>>>>>>> hardik-dev
   "generator": "pub",
   "generatorVersion": "3.2.2"
 }
