@@ -20,8 +20,7 @@ class SalesScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              WileToneAppBar(
-                  onPressed: () {}, title: VariablesUtils.totalSales),
+              WileToneAppBar(title: VariablesUtils.totalSales),
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerRight,

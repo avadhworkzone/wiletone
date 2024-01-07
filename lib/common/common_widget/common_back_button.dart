@@ -11,7 +11,7 @@ class CommonBackButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      color: ColorUtils.grey,
+      color: ColorUtils.greyEC,
       borderRadius: BorderRadius.circular(200),
       child: InkWell(
         onTap: onPressed,

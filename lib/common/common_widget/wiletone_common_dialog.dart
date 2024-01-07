@@ -28,7 +28,9 @@ Future<dynamic> willToneCommonDialog(String title) async {
               fontSize: 14.sp,
               textAlign: TextAlign.center,
             ),
-            SizeConfig.sH10(),
+            SizedBox(
+              height: 10.h,
+            ),
             WileToneCustomButton(
               onPressed: () {
                 Get.back();

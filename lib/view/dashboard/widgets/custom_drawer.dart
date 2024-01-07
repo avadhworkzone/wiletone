@@ -8,6 +8,7 @@ import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/size_config_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
+import 'package:wilatone_restaurant/view/auth/login_screen.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -25,7 +26,9 @@ class CustomDrawer extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            SizeConfig.sH30(),
+            SizedBox(
+              height: 30.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: ListTile(
@@ -54,7 +57,9 @@ class CustomDrawer extends StatelessWidget {
                 ),
               ),
             ),
-            SizeConfig.sH35(),
+            SizedBox(
+              height: 35.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
@@ -65,7 +70,9 @@ class CustomDrawer extends StatelessWidget {
                     fontWeight: FontWeightClass.medium,
                     fontSize: 12.sp,
                   ),
-                  SizeConfig.sW10(),
+                  SizedBox(
+                    width: 10.w,
+                  ),
                   const Expanded(
                       child: Divider(
                     color: ColorUtils.greyE6,
@@ -73,7 +80,9 @@ class CustomDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            SizeConfig.sH30(),
+            SizedBox(
+              height: 30.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
@@ -82,7 +91,9 @@ class CustomDrawer extends StatelessWidget {
                     AssetsUtils.allOrders,
                     scale: 2.5.sp,
                   ),
-                  SizeConfig.sW10(),
+                  SizedBox(
+                    width: 10.w,
+                  ),
                   WileToneTextWidget(
                     title: VariablesUtils.allOrders,
                     fontWeight: FontWeightClass.semiB,
@@ -91,7 +102,9 @@ class CustomDrawer extends StatelessWidget {
                 ],
               ),
             ),
-            SizeConfig.sH35(),
+            SizedBox(
+              height: 35.h,
+            ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
               child: Row(
@@ -100,7 +113,9 @@ class CustomDrawer extends StatelessWidget {
                     AssetsUtils.discountOrders,
                     scale: 2.5.sp,
                   ),
-                  SizeConfig.sW10(),
+                  SizedBox(
+                    width: 10.w,
+                  ),
                   WileToneTextWidget(
                     title: VariablesUtils.discountRates,
                     fontWeight: FontWeightClass.semiB,
@@ -112,7 +127,7 @@ class CustomDrawer extends StatelessWidget {
             Spacer(),
             WileToneCustomButton(
               onPressed: () {
-                Get.back();
+                Get.offAll(() => LoginScreen());
               },
               icon: Padding(
                 padding: EdgeInsets.only(right: 5.w),
@@ -129,7 +144,9 @@ class CustomDrawer extends StatelessWidget {
               buttonRadius: 8.sp,
               fontWeight: FontWeightClass.semiB,
             ),
-            SizeConfig.sH30(),
+            SizedBox(
+              height: 30.h,
+            ),
           ],
         ),
       ),

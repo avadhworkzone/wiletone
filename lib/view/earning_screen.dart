@@ -20,8 +20,7 @@ class EarningScreen extends StatelessWidget {
           child: Column(
             children: [
               const SizedBox(height: 20),
-              WileToneAppBar(
-                  onPressed: () {}, title: VariablesUtils.totalEarnings),
+              const WileToneAppBar(title: VariablesUtils.totalEarnings),
               const SizedBox(height: 20),
               Align(
                 alignment: Alignment.centerRight,

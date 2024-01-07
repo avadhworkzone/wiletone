@@ -8,6 +8,7 @@ class ColorUtils {
   static const Color skyBlue = Color(0xFF2A6CE7);
 
   static const Color grey = Color(0xFFC8C7CD);
+  static const Color greyEC = Color(0xFFECECEC);
   static const Color greyE6 = Color(0xFFE6E6E6);
   static const Color greenColor = Color(0xff54D27F);
   static const Color blueColor = Color(0xff60A9FF);
@@ -21,8 +22,6 @@ class ColorUtils {
   static const Color lightGreyD3 = Color(0xffD3D3D3);
   static const Color lightGreyE6 = Color(0xffE6E6E6);
 
-  static const Color grey = Color(0xFFECECEC);
   static const Color greyShade1 = Color(0xFF5B5B5B);
   static const Color green = Color(0xFF54D27F);
-
 }

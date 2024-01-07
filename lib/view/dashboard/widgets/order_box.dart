@@ -37,7 +37,9 @@ class OrderBox extends StatelessWidget {
               icon,
               scale: 2.5.sp,
             ),
-            SizeConfig.sW10(),
+            SizedBox(
+              width: 10.w,
+            ),
             WileToneTextWidget(
               title: title,
               fontWeight: FontWeightClass.semiB,

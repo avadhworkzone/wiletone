@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:wilatone_restaurant/common/common_widget/common_back_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
 import 'package:wilatone_restaurant/utils/typedef_utils.dart';
 
 class WileToneAppBar extends StatelessWidget {
-  const WileToneAppBar({Key? key, required this.onPressed, this.title})
+  const WileToneAppBar({Key? key, this.onPressed, this.title})
       : super(key: key);
 
-  final OnTap? onPressed;
+  final VoidCallback? onPressed;
   final String? title;
 
   @override
@@ -16,7 +17,10 @@ class WileToneAppBar extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         CommonBackButton(
-          onPressed: onPressed,
+          onPressed: onPressed ??
+              () {
+                Get.back();
+              },
         ),
         WileToneTextWidget(
           title: title!,

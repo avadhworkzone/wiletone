@@ -64,7 +64,6 @@ class WileToneCustomButton extends StatelessWidget {
           backgroundColor: MaterialStateProperty.all(
               isBorderShape ? ColorUtils.white : buttonColor),
         ),
-<<<<<<< HEAD
         child: Row(
           mainAxisSize: icon != null ? MainAxisSize.max : MainAxisSize.min,
           mainAxisAlignment:
@@ -78,13 +77,6 @@ class WileToneCustomButton extends StatelessWidget {
               fontWeight: fontWeight ?? FontWeightClass.semiB,
             ),
           ],
-=======
-        child: WileToneTextWidget(
-          title: buttonName,
-          fontSize: fontSize,
-          color: isBorderShape ? buttonColor : fontColor,
-          fontWeight: FontWeight.w600,
->>>>>>> hardik-dev
         ),
       ),
     );

@@ -21,8 +21,7 @@ class AllOrderScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  WileToneAppBar(
-                      onPressed: () {}, title: VariablesUtils.allOrders),
+                  WileToneAppBar(title: VariablesUtils.allOrders),
                   const SizedBox(height: 20),
                   filterSectionWidget(),
                   const SizedBox(height: 20),
@@ -39,7 +38,7 @@ class AllOrderScreen extends StatelessWidget {
   /// Transaction List Widget
   Widget transactionListWidget() {
     return Container(
-      color: ColorUtils.grey,
+      color: ColorUtils.greyEC,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
         child: Column(
@@ -141,7 +140,26 @@ class AllOrderScreen extends StatelessWidget {
       child: Row(
         children: [
           /// Sort
-
+          Container(
+            height: 35,
+            decoration: BoxDecoration(
+              border: Border.all(color: ColorUtils.grey),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.tune, size: 13),
+                WileToneTextWidget(
+                  title: VariablesUtils.sort,
+                  fontSize: 12,
+                  fontWeight: FontWeight.w500,
+                ),
+                Icon(Icons.arrow_drop_down),
+              ],
+            ),
+          ),
           const SizedBox(width: 10),
 
           /// Date

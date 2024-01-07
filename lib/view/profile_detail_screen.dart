@@ -24,8 +24,7 @@ class ProfileDetailScreen extends StatelessWidget {
                 child: Column(
                   children: [
                     const SizedBox(height: 20),
-                    WileToneAppBar(
-                        onPressed: () {}, title: VariablesUtils.profileDetails),
+                    WileToneAppBar(title: VariablesUtils.profileDetails),
                     const SizedBox(height: 20),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,

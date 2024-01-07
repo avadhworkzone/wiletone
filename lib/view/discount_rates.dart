@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:wilatone_restaurant/common/common_widget/wiletone_app_bar.dart';
+import 'package:wilatone_restaurant/common/common_widget/wiletone_common_dialog.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
@@ -22,28 +24,34 @@ class DiscountRates extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Material(
-      child: Column(
-        children: [
-          Container(
-            height: 70,
-            width: Get.width,
-            color: Colors.grey,
-          ),
-          DataList(tempList: tempList),
-          Padding(
-            padding: EdgeInsets.symmetric(horizontal: 15.sp),
-            child: WileToneCustomButton(
-              onPressed: () {},
-              buttonName: VariablesUtils.update,
-              fontSize: 16.sp,
-              buttonWidth: Get.width,
-              buttonHeight: 55.h,
-              buttonRadius: 12.sp,
-              fontWeight: FontWeightClass.medium,
+      child: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.sp),
+              child: WileToneAppBar(title: VariablesUtils.discountRates),
             ),
-          ),
-          SizeConfig.sH20(),
-        ],
+            SizedBox(
+              height: 20.h,
+            ),
+            DataList(tempList: tempList),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.sp),
+              child: WileToneCustomButton(
+                onPressed: () {},
+                buttonName: VariablesUtils.update,
+                fontSize: 16.sp,
+                buttonWidth: Get.width,
+                buttonHeight: 55.h,
+                buttonRadius: 12.sp,
+                fontWeight: FontWeightClass.medium,
+              ),
+            ),
+            SizedBox(
+              height: 20.h,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -65,36 +73,43 @@ class DataList extends StatelessWidget {
           child: ListView.builder(
             itemCount: tempList.length,
             itemBuilder: (context, index) {
-              return Container(
-                height: 64.h,
-                width: Get.width,
-                margin: EdgeInsets.only(bottom: 20.h),
-                decoration: BoxDecoration(
-                    border: Border.all(color: ColorUtils.grey),
-                    borderRadius: BorderRadius.circular(8.sp)),
-                padding:
-                    EdgeInsets.symmetric(horizontal: 20.sp, vertical: 15.sp),
-                child: Row(
-                  children: [
-                    WileToneTextWidget(
-                      title: tempList[index],
-                      color: ColorUtils.grey,
-                      fontWeight: FontWeightClass.medium,
-                      fontSize: 16.sp,
-                    ),
-                    const Spacer(),
-                    WileToneTextWidget(
-                      title: "10%",
-                      fontWeight: FontWeightClass.medium,
-                      fontSize: 16.sp,
-                    ),
-                    SizeConfig.sW10(),
-                    Icon(
-                      Icons.edit_outlined,
-                      color: ColorUtils.greenColor,
-                      size: 18.sp,
-                    )
-                  ],
+              return InkWell(
+                onTap: () {
+                  willToneCommonDialog(VariablesUtils.requestForDiscount);
+                },
+                child: Container(
+                  height: 64.h,
+                  width: Get.width,
+                  margin: EdgeInsets.only(bottom: 20.h),
+                  decoration: BoxDecoration(
+                      border: Border.all(color: ColorUtils.grey),
+                      borderRadius: BorderRadius.circular(8.sp)),
+                  padding:
+                      EdgeInsets.symmetric(horizontal: 20.sp, vertical: 15.sp),
+                  child: Row(
+                    children: [
+                      WileToneTextWidget(
+                        title: tempList[index],
+                        color: ColorUtils.grey,
+                        fontWeight: FontWeightClass.medium,
+                        fontSize: 16.sp,
+                      ),
+                      const Spacer(),
+                      WileToneTextWidget(
+                        title: "10%",
+                        fontWeight: FontWeightClass.medium,
+                        fontSize: 16.sp,
+                      ),
+                      SizedBox(
+                        width: 10.w,
+                      ),
+                      Icon(
+                        Icons.edit_outlined,
+                        color: ColorUtils.greenColor,
+                        size: 18.sp,
+                      )
+                    ],
+                  ),
                 ),
               );
             },
