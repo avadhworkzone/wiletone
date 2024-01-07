@@ -6,6 +6,7 @@ class ColorUtils {
   static const Color red = Colors.red;
   static const Color black = Colors.black;
   static const Color skyBlue = Color(0xFF2A6CE7);
+
   static const Color grey = Color(0xFFC8C7CD);
   static const Color greyE6 = Color(0xFFE6E6E6);
   static const Color greenColor = Color(0xff54D27F);
@@ -19,4 +20,8 @@ class ColorUtils {
   static const Color greyAC = Color(0xffACACAC);
   static const Color lightGreyD3 = Color(0xffD3D3D3);
   static const Color lightGreyE6 = Color(0xffE6E6E6);
+
+  static const Color grey = Color(0xFFECECEC);
+  static const Color green = Color(0xFF54D27F);
+
 }

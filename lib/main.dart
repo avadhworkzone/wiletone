@@ -5,12 +5,17 @@ import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
+<<<<<<< HEAD
 
 import 'view/auth/login_screen.dart';
 import 'view/dashboard/dashboard.dart';
 import 'view/discount_rates.dart';
 
 import 'viewModel/connectivity_view_model.dart';
+=======
+import 'package:wilatone_restaurant/view/auth/login_screen.dart';
+import 'package:wilatone_restaurant/view/profile_detail_screen.dart';
+>>>>>>> hardik-dev
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -38,7 +43,11 @@ class MyApp extends StatelessWidget {
           fontFamily: AssetsUtils.poppins,
         ),
         debugShowCheckedModeBanner: false,
+<<<<<<< HEAD
         home: LoginScreen(),
+=======
+        home: const ProfileDetailScreen(),
+>>>>>>> hardik-dev
       ),
     );
   }
