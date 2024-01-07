@@ -6,6 +6,8 @@ import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/login_screen.dart';
 
+import 'view/dashboard/dashboard.dart';
+
 void main() async {
   await GetStorage.init();
 
@@ -30,7 +32,7 @@ class MyApp extends StatelessWidget {
         fontFamily: AssetsUtils.poppins,
       ),
       debugShowCheckedModeBanner: false,
-      home: LoginScreen(),
+      home: DashBoard(),
     );
   }
 }
