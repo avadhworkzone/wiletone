@@ -119,21 +119,21 @@ class WileToneTextFormField extends StatelessWidget {
         prefixIcon: pIcon,
         suffixIcon: sIcon,
         enabledBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: ColorUtils.grey),
+            borderSide: const BorderSide(color: ColorUtils.lightGreyD3),
             borderRadius: BorderRadius.circular(borderRadius ?? 8)),
         focusedBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: ColorUtils.skyBlue),
+            borderSide: const BorderSide(color: ColorUtils.lightGreyD3),
             borderRadius: BorderRadius.circular(borderRadius ?? 8)),
         errorBorder: OutlineInputBorder(
-            borderSide: const BorderSide(color: ColorUtils.red),
+            borderSide: const BorderSide(color: ColorUtils.lightGreyD3),
             borderRadius: BorderRadius.circular(borderRadius ?? 8)),
         focusedErrorBorder: OutlineInputBorder(
             borderSide: const BorderSide(color: ColorUtils.red),
             borderRadius: BorderRadius.circular(borderRadius ?? 8)),
-        hintStyle:
-            hintStyle ?? TextStyle(fontSize: 10.sp, color: ColorUtils.grey),
+        hintStyle: hintStyle ??
+            TextStyle(fontSize: 10.sp, color: ColorUtils.lightGreyA6),
         hintText: hintText,
-        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 10),
+        contentPadding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 15.w),
       ),
     );
   }
