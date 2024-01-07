@@ -6,6 +6,7 @@ import 'package:get_storage/get_storage.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 
+import 'view/auth/login_screen.dart';
 import 'view/dashboard/dashboard.dart';
 import 'view/discount_rates.dart';
 
@@ -37,7 +38,7 @@ class MyApp extends StatelessWidget {
           fontFamily: AssetsUtils.poppins,
         ),
         debugShowCheckedModeBanner: false,
-        home: DiscountRates(),
+        home: LoginScreen(),
       ),
     );
   }

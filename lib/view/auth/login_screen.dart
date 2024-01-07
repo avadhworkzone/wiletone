@@ -10,6 +10,7 @@ import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/const_utils.dart';
 import 'package:wilatone_restaurant/utils/enum_utils.dart';
+import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/preference_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/otp_verify_screen.dart';
@@ -176,6 +177,8 @@ class _LoginScreenState extends State<LoginScreen> {
                 initialCountryCode: 'IN',
                 dropdownIconPosition: IconPosition.trailing,
                 flagsButtonPadding: EdgeInsets.only(left: 2.w),
+                dropdownTextStyle: TextStyle(
+                    fontSize: 16.sp, fontWeight: FontWeightClass.semiB),
                 onChanged: (phone) {
                   phoneNumber = phone.number;
                 },
