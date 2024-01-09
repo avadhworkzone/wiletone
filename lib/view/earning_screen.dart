@@ -51,10 +51,11 @@ class EarningScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 20),
-              const WileToneImageWidget(
-                image: 'assets/images/chart.png',
-                imageType: ImageType.png,
-              ),
+              // const WileToneImageWidget(
+              //   image: 'assets/images/chart.png',
+              //   imageType: ImageType.png,
+              // ),
+              BarChartSample1(),
             ],
           ),
         ),
