@@ -21,7 +21,7 @@ class AllOrderScreen extends StatelessWidget {
               child: Column(
                 children: [
                   const SizedBox(height: 20),
-                  WileToneAppBar(title: VariablesUtils.allOrders),
+                  const WileToneAppBar(title: VariablesUtils.allOrders),
                   const SizedBox(height: 20),
                   filterSectionWidget(),
                   const SizedBox(height: 20),
@@ -86,19 +86,20 @@ class AllOrderScreen extends StatelessWidget {
                         border: Border.all(color: ColorUtils.grey)),
                     padding:
                         EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.w),
-                    child: const Row(
+                    child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Row(
                           children: [
-                            WileToneImageWidget(
-                              image: 'assets/icons/rupeeIcon.png',
-                              height: 34,
-                              width: 34,
-                              imageType: ImageType.png,
-                            ),
-                            SizedBox(width: 10),
-                            WileToneTextWidget(
+                            // WileToneImageWidget(
+                            //   image: 'assets/icons/rupeeIcon.png',
+                            //   height: 34,
+                            //   width: 34,
+                            //   imageType: ImageType.png,
+                            // ),
+                            BarChartSample1(),
+                            const SizedBox(width: 10),
+                            const WileToneTextWidget(
                               title: VariablesUtils.discount,
                               fontSize: 12,
                               color: ColorUtils.black,
@@ -106,7 +107,7 @@ class AllOrderScreen extends StatelessWidget {
                             ),
                           ],
                         ),
-                        WileToneTextWidget(
+                        const WileToneTextWidget(
                           title: "₹50",
                           fontSize: 12,
                           fontWeight: FontWeight.w600,
