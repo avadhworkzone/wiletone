@@ -8,7 +8,9 @@ import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/size_config_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
+import 'package:wilatone_restaurant/view/all_order_screen.dart';
 import 'package:wilatone_restaurant/view/auth/login_screen.dart';
+import 'package:wilatone_restaurant/view/discount_rates.dart';
 
 class CustomDrawer extends StatelessWidget {
   const CustomDrawer({
@@ -85,21 +87,27 @@ class CustomDrawer extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Row(
-                children: [
-                  Image.asset(
-                    AssetsUtils.allOrders,
-                    scale: 2.5.sp,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  WileToneTextWidget(
-                    title: VariablesUtils.allOrders,
-                    fontWeight: FontWeightClass.semiB,
-                    fontSize: 15.sp,
-                  ),
-                ],
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                  Get.to(() => const AllOrderScreen());
+                },
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AssetsUtils.allOrders,
+                      scale: 2.5.sp,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    WileToneTextWidget(
+                      title: VariablesUtils.allOrders,
+                      fontWeight: FontWeightClass.semiB,
+                      fontSize: 15.sp,
+                    ),
+                  ],
+                ),
               ),
             ),
             SizedBox(
@@ -107,27 +115,33 @@ class CustomDrawer extends StatelessWidget {
             ),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 10.w),
-              child: Row(
-                children: [
-                  Image.asset(
-                    AssetsUtils.discountOrders,
-                    scale: 2.5.sp,
-                  ),
-                  SizedBox(
-                    width: 10.w,
-                  ),
-                  WileToneTextWidget(
-                    title: VariablesUtils.discountRates,
-                    fontWeight: FontWeightClass.semiB,
-                    fontSize: 15.sp,
-                  ),
-                ],
+              child: GestureDetector(
+                onTap: () {
+                  Get.back();
+                  Get.to(() => DiscountRates());
+                },
+                child: Row(
+                  children: [
+                    Image.asset(
+                      AssetsUtils.discountOrders,
+                      scale: 2.5.sp,
+                    ),
+                    SizedBox(
+                      width: 10.w,
+                    ),
+                    WileToneTextWidget(
+                      title: VariablesUtils.discountRates,
+                      fontWeight: FontWeightClass.semiB,
+                      fontSize: 15.sp,
+                    ),
+                  ],
+                ),
               ),
             ),
-            Spacer(),
+            const Spacer(),
             WileToneCustomButton(
               onPressed: () {
-                Get.offAll(() => LoginScreen());
+                Get.offAll(() => const LoginScreen());
               },
               icon: Padding(
                 padding: EdgeInsets.only(right: 5.w),
