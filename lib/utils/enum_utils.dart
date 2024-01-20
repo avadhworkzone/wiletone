@@ -9,3 +9,11 @@ enum ServiceType { Income, Expenses, Both }
 
 // ignore: constant_identifier_names
 enum DialogCloseType { CloseBtn, AddBtnAndClose, ClickOnDataAndClose }
+
+enum APIHeaderType {
+  fileUploadWithToken,
+  fileUploadWithoutToken,
+  jsonBodyWithToken,
+  onlyToken
+}
+enum APIType { aPost, aGet, aDelete, aPut, aFileUpload }
