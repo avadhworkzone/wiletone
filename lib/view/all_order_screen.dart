@@ -41,94 +41,96 @@ class AllOrderScreen extends StatelessWidget {
       color: ColorUtils.greyEC,
       child: Padding(
         padding: EdgeInsets.symmetric(horizontal: 15.w),
-        child: Column(
-          children: List.generate(2, (index) {
-            return Container(
-              decoration: BoxDecoration(
-                  color: ColorUtils.white,
-                  borderRadius: BorderRadius.circular(12)),
-              margin: EdgeInsets.symmetric(vertical: 10.w),
-              padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
-              child: Column(
-                children: [
-                  const Row(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          WileToneTextWidget(
-                            title: VariablesUtils.transactionID,
-                            fontSize: 12,
-                            color: ColorUtils.greyShade1,
-                            fontWeight: FontWeight.w500,
-                          ),
-                          WileToneTextWidget(
-                            title: "ZUR10203884",
-                            fontSize: 16,
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ],
-                      ),
-                      WileToneTextWidget(
-                        title: "₹500",
-                        fontSize: 16,
-                        color: ColorUtils.black,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ],
-                  ),
-                  const SizedBox(height: 20),
-                  Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(4),
-                        border: Border.all(color: ColorUtils.grey)),
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.w),
-                    child: Row(
+        child: SingleChildScrollView(
+          child: Column(
+            children: List.generate(2, (index) {
+              return Container(
+                decoration: BoxDecoration(
+                    color: ColorUtils.white,
+                    borderRadius: BorderRadius.circular(12)),
+                margin: EdgeInsets.symmetric(vertical: 10.w),
+                padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.w),
+                child: Column(
+                  children: [
+                    const Row(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            // WileToneImageWidget(
-                            //   image: 'assets/icons/rupeeIcon.png',
-                            //   height: 34,
-                            //   width: 34,
-                            //   imageType: ImageType.png,
-                            // ),
-                            BarChartSample1(),
-                            const SizedBox(width: 10),
-                            const WileToneTextWidget(
-                              title: VariablesUtils.discount,
+                            WileToneTextWidget(
+                              title: VariablesUtils.transactionID,
                               fontSize: 12,
-                              color: ColorUtils.black,
-                              fontWeight: FontWeight.w700,
+                              color: ColorUtils.greyShade1,
+                              fontWeight: FontWeight.w500,
+                            ),
+                            WileToneTextWidget(
+                              title: "ZUR10203884",
+                              fontSize: 16,
+                              fontWeight: FontWeight.w600,
                             ),
                           ],
                         ),
-                        const WileToneTextWidget(
-                          title: "₹50",
-                          fontSize: 12,
+                        WileToneTextWidget(
+                          title: "₹500",
+                          fontSize: 16,
+                          color: ColorUtils.black,
                           fontWeight: FontWeight.w600,
                         ),
                       ],
                     ),
-                  ),
-                  const SizedBox(height: 20),
-                  const Align(
-                    alignment: Alignment.centerRight,
-                    child: WileToneTextWidget(
-                      title: "12 Nov 2023 at 2:00PM",
-                      fontSize: 12,
-                      fontWeight: FontWeight.w600,
-                      color: ColorUtils.greyShade1,
+                    const SizedBox(height: 20),
+                    Container(
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(4),
+                          border: Border.all(color: ColorUtils.grey)),
+                      padding: EdgeInsets.symmetric(
+                          horizontal: 10.w, vertical: 15.w),
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Row(
+                            children: [
+                              WileToneImageWidget(
+                                image: 'assets/icons/rupeeIcon.png',
+                                height: 34,
+                                width: 34,
+                                imageType: ImageType.png,
+                              ),
+                              // BarChartSample1(),
+                              SizedBox(width: 10),
+                              WileToneTextWidget(
+                                title: VariablesUtils.discount,
+                                fontSize: 12,
+                                color: ColorUtils.black,
+                                fontWeight: FontWeight.w700,
+                              ),
+                            ],
+                          ),
+                          WileToneTextWidget(
+                            title: "₹50",
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
-            );
-          }),
+                    const SizedBox(height: 20),
+                    const Align(
+                      alignment: Alignment.centerRight,
+                      child: WileToneTextWidget(
+                        title: "12 Nov 2023 at 2:00PM",
+                        fontSize: 12,
+                        fontWeight: FontWeight.w600,
+                        color: ColorUtils.greyShade1,
+                      ),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
         ),
       ),
     );
