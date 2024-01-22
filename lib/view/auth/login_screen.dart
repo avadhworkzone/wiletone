@@ -172,9 +172,12 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w600,
                       fontFamily: AssetsUtils.poppins),
                   errorBorder: OutlineInputBorder(
+
                       borderSide:
                           const BorderSide(color: ColorUtils.red, width: 1),
-                      borderRadius: BorderRadius.circular(12)),
+                      borderRadius: BorderRadius.circular(12),
+
+                  ),
                   focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
                           color: ColorUtils.lightGreyD3, width: 1),
@@ -190,6 +193,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 cursorColor: ColorUtils.grey5B,
                 disableLengthCheck: false,
+
                 initialCountryCode: 'IN',
                 dropdownIconPosition: IconPosition.trailing,
                 flagsButtonPadding: EdgeInsets.only(left: 2.w),
@@ -216,7 +220,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   FocusManager.instance.primaryFocus?.unfocus();
                   if (phoneController.text.isEmpty) {
                     SnackBarUtils.snackBar(
-                      message: "Please enter phone number",
+                      message: VariablesUtils.enterMobileNumber,
                       bgColor: ColorUtils.red,
                     );
                     return;
@@ -232,13 +236,13 @@ class _LoginScreenState extends State<LoginScreen> {
                         authViewModel.sendOtpApiResponse.data;
                     if(res.code == 200){
                       Get.back();
-                      SnackBarUtils.snackBar( message: res.message ?? "OTP Sent Successfully...");
+                      SnackBarUtils.snackBar( message: res.message ?? VariablesUtils.otpSentSuccessfully);
 
                       Get.to(()=> OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode.isEmpty ? '91' : dialCode,))!.then((value) => phoneController.clear());
 
                     }else{
                       Get.back();
-                      SnackBarUtils.snackBar( message: res.message ?? "Something Went Wrong...",bgColor: ColorUtils.red);
+                      SnackBarUtils.snackBar( message: res.message ?? VariablesUtils.somethingWentWrong,bgColor: ColorUtils.red);
 
                     }
 

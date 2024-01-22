@@ -211,10 +211,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                     startTimeout();
 
                                     log('======${res.message}');
-                                    SnackBarUtils.snackBar( message:  res.message ?? "OTP Resend Successfully...");
+                                    SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.otpResentSuccessfully);
                                   } else {
                                     Get.back();
-                                    SnackBarUtils.snackBar( message: res.message ?? "Failed to resend OTP. Please try again.",bgColor: ColorUtils.red);
+                                    SnackBarUtils.snackBar( message: res.message ?? VariablesUtils.resendOtpFailed,bgColor: ColorUtils.red);
                                   }
                                 }
 
@@ -246,7 +246,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 onTap: () async {
                   if (otpEditController.text.isEmpty) {
 
-                    SnackBarUtils.snackBar(message:  "Please enter OTP.",bgColor: ColorUtils.red);
+                    SnackBarUtils.snackBar(message:  VariablesUtils.enterOtp,bgColor: ColorUtils.red);
                   } else {
 
                     await authViewModel.verifyOtp(widget.phoneNumber, otpEditController.text);
@@ -256,9 +256,9 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       if (res.code == 200) {
                         Get.to(() => const CreateProfileScreen());
                         log('======${res.message}');
-                        SnackBarUtils.snackBar( message:  res.message ?? "mobile verified successfully.");
+                        SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.mobileVerified);
                       } else {
-                        SnackBarUtils.snackBar( message:  res.message ?? "Invalid Otp...");
+                        SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.invalidOtp);
                       }
                     }
                   }

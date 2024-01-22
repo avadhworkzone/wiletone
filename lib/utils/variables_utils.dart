@@ -29,7 +29,6 @@ class VariablesUtils {
   ///LOGIN SCREEN....
   static const welcomeToZura = 'Welcome to Zura';
   static const loginSignUp = 'Login in or sign up';
-  static const enterMobileNumber = 'Enter Mobile Number';
   static const continueText = 'Continue';
   static const or = 'or';
   static const byContinuing = 'By continuing. you agree to our';
@@ -46,6 +45,14 @@ class VariablesUtils {
   static const ownerName = 'Owner  Name';
   static const ownerMobile = 'Owner  Mobile';
   static const noInternet = 'No internet';
+  static const otpSentSuccessfully = 'OTP Sent Successfully...';
+  static const otpResentSuccessfully = 'OTP Resend Successfully...';
+  static const resendOtpFailed = 'Failed to resend OTP. Please try again.';
+  static const enterMobileNumber = 'Please enter phone number';
+  static const enterOtp = 'Please enter OTP.';
+  static const mobileVerified = 'Mobile verified successfully.';
+  static const invalidOtp = 'Invalid Otp...';
+
 
   /// Profile Details Screen
 
