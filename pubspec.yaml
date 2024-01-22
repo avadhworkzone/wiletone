@@ -50,6 +50,8 @@ dependencies:
   fl_chart: ^0.66.0
   http: ^1.2.0
 
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

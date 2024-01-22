@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:wilatone_restaurant/model/apiModel/responseModel/send_otp_res_model.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/social_login_res_model.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/verify_otp_res_model.dart';
 import 'package:wilatone_restaurant/model/apiService/api_service.dart';
 import 'package:wilatone_restaurant/model/apiService/base_service.dart';
@@ -23,20 +24,30 @@ class AuthRepo extends BaseService {
   }
 
   /// =============================  Verify OTP  ============================== ///
-  Future<VerifyOtpResModel> verifyOtpRepo(String otp,String pNumber) async {
+  Future<VerifyOtpResModel> verifyOtpRepo(String otp, String pNumber) async {
     Map<String, dynamic> body = {
       "otp": otp,
-      "mobile" : pNumber,
+      "mobile": pNumber,
     };
     var response = await ApiService().getResponse(
-
-        apiType: APIType.aPost,
-        withToken: false,
-        body: body,
-        url: verifyOtp);
+        apiType: APIType.aPost, withToken: false, body: body, url: verifyOtp);
 
     log("=============RES:=========$response");
     VerifyOtpResModel result = VerifyOtpResModel.fromJson(response);
+
+    return result;
+  }
+
+  /// =============================  SOCIAL LOGIN  ============================== ///
+  Future<SocialLoginResModel> socialLoginRepo(String encryptedData) async {
+    Map<String, dynamic> body = {
+      "data": encryptedData,
+    };
+    var response = await ApiService().getResponse(
+        apiType: APIType.aPost, withToken: false, body: body, url: socialLogin);
+
+    log("=============SocialLoginResModel RES:=========$response");
+    SocialLoginResModel result = SocialLoginResModel.fromJson(response);
 
     return result;
   }

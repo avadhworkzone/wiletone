@@ -8,6 +8,7 @@ import 'package:wilatone_restaurant/common/common_widget/common_snackbar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_image_widget.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/social_login_res_model.dart';
 import 'package:wilatone_restaurant/service/encrypt_service.dart';
 import 'package:wilatone_restaurant/service/social_auth_service.dart';
 import 'package:wilatone_restaurant/utils/app_icon_assets.dart';
@@ -18,7 +19,9 @@ import 'package:wilatone_restaurant/utils/enum_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/preference_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
+import 'package:wilatone_restaurant/view/auth/create_profile_screen.dart';
 import 'package:wilatone_restaurant/view/auth/otp_verify_screen.dart';
+import 'package:wilatone_restaurant/view/dashboard/dashboard.dart';
 import 'package:wilatone_restaurant/view/general/wilestone_web_view.dart';
 
 import '../../common/common_widget/common_loading_indicator.dart';
@@ -35,7 +38,7 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
-  String phoneNumber = '', dialCode = "";
+  String phoneNumber = '', dialCode = "91";
 
   final AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
@@ -157,17 +160,15 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: IntlPhoneField(
-                validator:  (value) {
-                  if (value == null ) {
+                validator: (value) {
+                  if (value == null) {
                     return 'Please enter phone number';
                   }
                   return null;
                 },
-
                 controller: phoneController,
                 obscureText: false,
                 decoration: InputDecoration(
-
                   counterText: '',
                   hintText: VariablesUtils.enterMobileNumber,
                   hintStyle: TextStyle(
@@ -230,21 +231,27 @@ class _LoginScreenState extends State<LoginScreen> {
                     postDataLoadingIndicator(),
                     barrierDismissible: false,
                   );
-                  await authViewModel.sendOtp(phoneNumber = phoneController.text,true);
-                  if (authViewModel.sendOtpApiResponse.status == Status.COMPLETE) {
-                    SendOtpResModel res =
-                        authViewModel.sendOtpApiResponse.data;
-                    if(res.code == 200){
+                  await authViewModel.sendOtp(dialCode + phoneNumber, true);
+                  if (authViewModel.sendOtpApiResponse.status ==
+                      Status.COMPLETE) {
+                    SendOtpResModel res = authViewModel.sendOtpApiResponse.data;
+                    if (res.code == 200) {
                       Get.back();
-                      SnackBarUtils.snackBar( message: res.message ?? "OTP Sent Successfully...");
+                      SnackBarUtils.snackBar(
+                          message: res.message ?? "OTP Sent Successfully...");
 
-                      Get.to(()=> OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode.isEmpty ? '91' : dialCode,))!.then((value) => phoneController.clear());
-
-                    }else{
+                      Get.to(() => OtpVerificationScreen(
+                                phoneNumber: phoneController.text,
+                                countyCode: dialCode.isEmpty ? '91' : dialCode,
+                              ))!
+                          .then((value) => phoneController.clear());
+                    } else {
                       Get.back();
-                      SnackBarUtils.snackBar( message: res.message ?? "Something Went Wrong...",bgColor: ColorUtils.red);
-
+                      SnackBarUtils.snackBar(
+                          message: res.message ?? "Something Went Wrong...",
+                          bgColor: ColorUtils.red);
                     }
+                  }
                 },
                 buttonHeight: 52,
                 buttonColor: ColorUtils.greenColor,
@@ -311,20 +318,54 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   Future<void> onGoogleLoginTap() async {
-    final user = await SocialAuthServices.signInWithGoogle();
-    print('GOOGLE LOGIN USER =>${user?.email}');
-    if (user == null) {
-      // commonSnackBar(message: "Google login failed, please try again");
-      return;
-    }
-    final body = {
-      "email": user.email,
-    };
-    print('GOOGLE body =>${jsonEncode(body)}');
+    try {
+      Get.dialog(
+        postDataLoadingIndicator(),
+        barrierDismissible: false,
+      );
+      final user = await SocialAuthServices.signInWithGoogle();
+      print('GOOGLE LOGIN USER =>${user?.email}');
+      if (user == null) {
+        SnackBarUtils.snackBar(
+          message: "Google login failed, please try again",
+          bgColor: ColorUtils.red,
+        );
+        return;
+      }
+      final body = {
+        "email": user.email,
+      };
+      print('GOOGLE body =>${jsonEncode(body)}');
 
-    String encryptedToken = AESService.encryptAES(
-      jsonEncode(body),
-    );
-    print('GOOGLE encryptedToken =>$encryptedToken');
+      String encryptedToken = AESService.encryptAES(
+        jsonEncode(body),
+      );
+      print('GOOGLE encryptedToken =>$encryptedToken');
+
+      await authViewModel.socialLogin(encryptedToken);
+      if (authViewModel.socialLoginApiResponse.status == Status.COMPLETE) {
+        SocialLoginResModel res = authViewModel.socialLoginApiResponse.data;
+        if (res.code == 200) {
+          Get.back();
+          if (res.data!.isProfileUpdated == true) {
+            Get.to(() => const CreateProfileScreen());
+          } else {
+            Get.to(() => DashBoard());
+          }
+        } else {
+          Get.back();
+          SnackBarUtils.snackBar(
+              message: res.message ?? "Something Went Wrong...",
+              bgColor: ColorUtils.red);
+        }
+      } else {
+        Get.back();
+        SnackBarUtils.snackBar(
+            message: "Something Went Wrong...", bgColor: ColorUtils.red);
+      }
+    } catch (e) {
+      Get.back();
+      print('SOCIAL LOGIN ERROR :=> $e');
+    }
   }
 }
