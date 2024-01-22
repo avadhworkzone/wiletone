@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:wilatone_restaurant/common/common_widget/common_snackbar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_image_widget.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
@@ -20,6 +21,11 @@ import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/otp_verify_screen.dart';
 import 'package:wilatone_restaurant/view/general/wilestone_web_view.dart';
 
+import '../../common/common_widget/common_loading_indicator.dart';
+import '../../model/apiModel/responseModel/send_otp_res_model.dart';
+import '../../model/apis/api_response.dart';
+import '../../viewModel/auth_view_model.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -30,6 +36,8 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
   String phoneNumber = '', dialCode = "";
+
+  final AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
   @override
   Widget build(BuildContext context) {
@@ -149,9 +157,17 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: IntlPhoneField(
+                validator:  (value) {
+                  if (value == null ) {
+                    return 'Please enter phone number';
+                  }
+                  return null;
+                },
+
                 controller: phoneController,
                 obscureText: false,
                 decoration: InputDecoration(
+
                   counterText: '',
                   hintText: VariablesUtils.enterMobileNumber,
                   hintStyle: TextStyle(
@@ -188,18 +204,47 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 onCountryChanged: (phone) async {
                   dialCode = phone.dialCode.toString();
-                  logs("Code ${phone.code}");
+                  logs("=====Code ${phone.dialCode}");
                   await PreferenceManagerUtils.setCountryCode(dialCode);
                   await PreferenceManagerUtils.setCountryName(phone.code);
                 },
               ),
             ),
             SizedBox(height: 20.h),
+
+            ///Continue Button
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: WileToneCustomButton(
-                onPressed: () {
-                  Get.to(const OtpVerificationScreen());
+                onPressed: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (phoneController.text.isEmpty) {
+                    SnackBarUtils.snackBar(
+                      message: "Please enter phone number",
+                      bgColor: ColorUtils.red,
+                    );
+                    return;
+                  }
+
+                  Get.dialog(
+                    postDataLoadingIndicator(),
+                    barrierDismissible: false,
+                  );
+                  await authViewModel.sendOtp(phoneNumber = phoneController.text,true);
+                  if (authViewModel.sendOtpApiResponse.status == Status.COMPLETE) {
+                    SendOtpResModel res =
+                        authViewModel.sendOtpApiResponse.data;
+                    if(res.code == 200){
+                      Get.back();
+                      SnackBarUtils.snackBar( message: res.message ?? "OTP Sent Successfully...");
+
+                      Get.to(()=> OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode.isEmpty ? '91' : dialCode,))!.then((value) => phoneController.clear());
+
+                    }else{
+                      Get.back();
+                      SnackBarUtils.snackBar( message: res.message ?? "Something Went Wrong...",bgColor: ColorUtils.red);
+
+                    }
                 },
                 buttonHeight: 52,
                 buttonColor: ColorUtils.greenColor,

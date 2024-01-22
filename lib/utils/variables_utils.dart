@@ -63,4 +63,11 @@ class VariablesUtils {
   static const discount = "Discount";
   static const timing = "Timing";
   static const transactionID = "Transaction ID";
+
+
+  ///Error Msg
+  static const somethingWentWrong = 'Something Went Wrong...';
+  static const notApplicable = 'Not Applicable';
+  static const fieldEmpty = 'Field Empty';
+  static const noData = 'No Data Found';
 }
