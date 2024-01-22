@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -9,12 +10,15 @@ import 'package:pinput/pinput.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_app_bar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/send_otp_res_model.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/verify_otp_res_model.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/create_profile_screen.dart';
 
 
+import '../../common/common_widget/common_loading_indicator.dart';
+import '../../common/common_widget/common_snackbar.dart';
 import '../../model/apis/api_response.dart';
 import '../../viewModel/auth_view_model.dart';
 
@@ -191,20 +195,26 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
                                 FocusManager.instance.primaryFocus?.unfocus();
-
+                                Get.dialog(
+                                  postDataLoadingIndicator(),
+                                  barrierDismissible: false,
+                                );
                                 await authViewModel.sendOtp(widget.phoneNumber,false);
                                 if (authViewModel.sendOtpApiResponse.status ==
                                     Status.COMPLETE) {
                                   SendOtpResModel res =
                                       authViewModel.sendOtpApiResponse.data;
-                                  print('RES CODE ==>${res.code}');
+                                  log('RES CODE ==>${res.code}');
                                   if (res.code == 200) {
+                                    Get.back();
                                     currentSeconds = 30;
                                     startTimeout();
-                                    print('======${res.message}');
+
+                                    log('======${res.message}');
+                                    SnackBarUtils.snackBar( message:  res.message ?? "OTP Resend Successfully...");
                                   } else {
-                                    Get.snackbar('Error',
-                                        'Failed to resend OTP. Please try again.');
+                                    Get.back();
+                                    SnackBarUtils.snackBar( message: res.message ?? "Failed to resend OTP. Please try again.",bgColor: ColorUtils.red);
                                   }
                                 }
 
@@ -215,10 +225,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 color: ColorUtils.greyAC,
                                 fontFamily: AssetsUtils.poppins),
                           )
-                        : TextSpan(),
+                        : const TextSpan(),
                     currentSeconds != 0
                         ? TextSpan(
-                            text: formatHHMMSS(currentSeconds) ?? '',
+                            text: formatHHMMSS(currentSeconds),
                             style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
@@ -234,17 +244,22 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               ),
               InkWell(
                 onTap: () async {
-                  await authViewModel.verifyOtp(
-                      widget.phoneNumber, otpEditController.text);
-                  if (authViewModel.verifyOtpApiResponse.status ==
-                      Status.COMPLETE) {
-                    SendOtpResModel res =
-                        authViewModel.verifyOtpApiResponse.data;
-                    if (res.code == 200) {
-                      Get.to(() => CreateProfileScreen());
-                      print('======${res.message}');
-                    } else {
-                      Get.snackbar("", 'Invalid Otp..');
+                  if (otpEditController.text.isEmpty) {
+
+                    SnackBarUtils.snackBar(message:  "Please enter OTP.",bgColor: ColorUtils.red);
+                  } else {
+
+                    await authViewModel.verifyOtp(widget.phoneNumber, otpEditController.text);
+                    if (authViewModel.verifyOtpApiResponse.status == Status.COMPLETE) {
+                      VerifyOtpResModel res =
+                          authViewModel.verifyOtpApiResponse.data;
+                      if (res.code == 200) {
+                        Get.to(() => const CreateProfileScreen());
+                        log('======${res.message}');
+                        SnackBarUtils.snackBar( message:  res.message ?? "mobile verified successfully.");
+                      } else {
+                        SnackBarUtils.snackBar( message:  res.message ?? "Invalid Otp...");
+                      }
                     }
                   }
                 },

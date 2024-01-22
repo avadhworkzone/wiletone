@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl_phone_field/intl_phone_field.dart';
+import 'package:wilatone_restaurant/common/common_widget/common_snackbar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_image_widget.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
@@ -30,7 +31,6 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   final phoneController = TextEditingController();
-  final _formKey = GlobalKey<FormState>();
   String phoneNumber = '', dialCode = "";
 
   final AuthViewModel authViewModel = Get.find<AuthViewModel>();
@@ -101,201 +101,205 @@ class _LoginScreenState extends State<LoginScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        child: Stack(
+        child: Column(
           children: [
-            Column(
+            Container(
+              height: Get.height / 3,
+              width: Get.width,
+              color: ColorUtils.black,
+            ),
+            SizedBox(
+              height: 30.h,
+            ),
+            WileToneTextWidget(
+              title: VariablesUtils.welcomeToZura,
+              color: ColorUtils.black,
+              fontSize: 28.sp,
+              fontWeight: FontWeight.w700,
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(height: 30.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Divider(
+                      color: ColorUtils.lightGreyE6,
+                      height: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  WileToneTextWidget(
+                    title: VariablesUtils.loginSignUp,
+                    color: ColorUtils.grey5B,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  const Expanded(
+                      child: Divider(
+                    color: ColorUtils.lightGreyE6,
+                    height: 1,
+                  )),
+                ],
+              ),
+            ),
+            SizedBox(height: 30.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: IntlPhoneField(
+                validator:  (value) {
+                  if (value == null ) {
+                    return 'Please enter phone number';
+                  }
+                  return null;
+                },
+
+                controller: phoneController,
+                obscureText: false,
+                decoration: InputDecoration(
+
+                  counterText: '',
+                  hintText: VariablesUtils.enterMobileNumber,
+                  hintStyle: TextStyle(
+                      color: ColorUtils.lightGreyA6,
+                      fontSize: 13.sp,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: AssetsUtils.poppins),
+                  errorBorder: OutlineInputBorder(
+                      borderSide:
+                          const BorderSide(color: ColorUtils.red, width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: ColorUtils.lightGreyD3, width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  enabledBorder: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: ColorUtils.lightGreyD3, width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                  border: OutlineInputBorder(
+                      borderSide: const BorderSide(
+                          color: ColorUtils.lightGreyD3, width: 1),
+                      borderRadius: BorderRadius.circular(12)),
+                ),
+                cursorColor: ColorUtils.grey5B,
+                disableLengthCheck: false,
+                initialCountryCode: 'IN',
+                dropdownIconPosition: IconPosition.trailing,
+                flagsButtonPadding: EdgeInsets.only(left: 2.w),
+                dropdownTextStyle: TextStyle(
+                    fontSize: 16.sp, fontWeight: FontWeightClass.semiB),
+                onChanged: (phone) {
+                  phoneNumber = phone.number;
+                },
+                onCountryChanged: (phone) async {
+                  dialCode = phone.dialCode.toString();
+                  logs("=====Code ${phone.dialCode}");
+                  await PreferenceManagerUtils.setCountryCode(dialCode);
+                  await PreferenceManagerUtils.setCountryName(phone.code);
+                },
+              ),
+            ),
+            SizedBox(height: 20.h),
+
+            ///Continue Button
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: WileToneCustomButton(
+                onPressed: () async {
+                  FocusManager.instance.primaryFocus?.unfocus();
+                  if (phoneController.text.isEmpty) {
+                    SnackBarUtils.snackBar(
+                      message: "Please enter phone number",
+                      bgColor: ColorUtils.red,
+                    );
+                    return;
+                  }
+
+                  Get.dialog(
+                    postDataLoadingIndicator(),
+                    barrierDismissible: false,
+                  );
+                  await authViewModel.sendOtp(phoneNumber = phoneController.text,true);
+                  if (authViewModel.sendOtpApiResponse.status == Status.COMPLETE) {
+                    SendOtpResModel res =
+                        authViewModel.sendOtpApiResponse.data;
+                    if(res.code == 200){
+                      Get.back();
+                      SnackBarUtils.snackBar( message: res.message ?? "OTP Sent Successfully...");
+
+                      Get.to(()=> OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode.isEmpty ? '91' : dialCode,))!.then((value) => phoneController.clear());
+
+                    }else{
+                      Get.back();
+                      SnackBarUtils.snackBar( message: res.message ?? "Something Went Wrong...",bgColor: ColorUtils.red);
+
+                    }
+
+                  }
+
+                },
+                buttonHeight: 52,
+                buttonColor: ColorUtils.greenColor,
+                buttonName: VariablesUtils.continueText,
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 20.w),
+              child: Row(
+                children: [
+                  const Expanded(
+                    child: Divider(
+                      color: ColorUtils.lightGreyE6,
+                      height: 1,
+                    ),
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  WileToneTextWidget(
+                    title: VariablesUtils.or,
+                    color: ColorUtils.grey5B,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 12.sp,
+                  ),
+                  SizedBox(
+                    width: 10.w,
+                  ),
+                  const Expanded(
+                      child: Divider(
+                    color: ColorUtils.lightGreyE6,
+                    height: 1,
+                  )),
+                ],
+              ),
+            ),
+            SizedBox(height: 20.h),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  height: Get.height / 3,
-                  width: Get.width,
-                  color: ColorUtils.black,
+                const WileToneImageWidget(
+                  image: AppIconAssets.googleIcon,
+                  imageType: ImageType.png,
+                  scale: 5,
                 ),
                 SizedBox(
-                  height: 30.h,
+                  width: 10.w,
                 ),
-                WileToneTextWidget(
-                  title: VariablesUtils.welcomeToZura,
-                  color: ColorUtils.black,
-                  fontSize: 28.sp,
-                  fontWeight: FontWeight.w700,
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(height: 30.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          color: ColorUtils.lightGreyE6,
-                          height: 1,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      WileToneTextWidget(
-                        title: VariablesUtils.loginSignUp,
-                        color: ColorUtils.grey5B,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.sp,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const Expanded(
-                          child: Divider(
-                        color: ColorUtils.lightGreyE6,
-                        height: 1,
-                      )),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 30.h),
-                Form(
-                  key: _formKey,
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(horizontal: 20.w),
-                    child: IntlPhoneField(
-                      validator:  (value) {
-                        if (value == null ) {
-                          return 'Please enter phone number';
-                        }
-                        return null;
-                      },
-                      controller: phoneController,
-                      obscureText: false,
-                      decoration: InputDecoration(
-                        counterText: '',
-                        hintText: VariablesUtils.enterMobileNumber,
-                        hintStyle: TextStyle(
-                            color: ColorUtils.lightGreyA6,
-                            fontSize: 13.sp,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: AssetsUtils.poppins),
-                        errorBorder: OutlineInputBorder(
-                            borderSide:
-                                const BorderSide(color: ColorUtils.red, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        focusedBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: ColorUtils.lightGreyD3, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        enabledBorder: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: ColorUtils.lightGreyD3, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                        border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: ColorUtils.lightGreyD3, width: 1),
-                            borderRadius: BorderRadius.circular(12)),
-                      ),
-                      cursorColor: ColorUtils.grey5B,
-                      disableLengthCheck: false,
-                      initialCountryCode: 'IN',
-                      dropdownIconPosition: IconPosition.trailing,
-                      flagsButtonPadding: EdgeInsets.only(left: 2.w),
-                      dropdownTextStyle: TextStyle(
-                          fontSize: 16.sp, fontWeight: FontWeightClass.semiB),
-                      onChanged: (phone) {
-                        phoneNumber = phone.number;
-                      },
-                      onCountryChanged: (phone) async {
-                        dialCode = phone.dialCode.toString();
-                        logs("=====Code ${phone.dialCode}");
-                        await PreferenceManagerUtils.setCountryCode(dialCode);
-                        await PreferenceManagerUtils.setCountryName(phone.code);
-                      },
-                    ),
-                  ),
-                ),
-                SizedBox(height: 20.h),
-
-                ///Continue Button
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: WileToneCustomButton(
-                    onPressed: () async {
-                      await authViewModel.sendOtp(phoneNumber = phoneController.text,true);
-                      if (authViewModel.sendOtpApiResponse.status ==
-                      Status.COMPLETE) {
-                        SendOtpResModel res =
-                            authViewModel.sendOtpApiResponse.data;
-                        if(res.code == 200){
-                          Get.to(()=> OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode.isEmpty ? '91' : dialCode,));
-                        }
-
-                      }
-                      // Get.to(OtpVerificationScreen(phoneNumber: phoneController.text,countyCode: dialCode,));
-
-                      FocusManager.instance.primaryFocus?.unfocus();
-
-                    },
-                    buttonHeight: 52,
-                    buttonColor: ColorUtils.greenColor,
-                    buttonName: VariablesUtils.continueText,
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 20.w),
-                  child: Row(
-                    children: [
-                      const Expanded(
-                        child: Divider(
-                          color: ColorUtils.lightGreyE6,
-                          height: 1,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      WileToneTextWidget(
-                        title: VariablesUtils.or,
-                        color: ColorUtils.grey5B,
-                        fontWeight: FontWeight.w500,
-                        fontSize: 12.sp,
-                      ),
-                      SizedBox(
-                        width: 10.w,
-                      ),
-                      const Expanded(
-                          child: Divider(
-                        color: ColorUtils.lightGreyE6,
-                        height: 1,
-                      )),
-                    ],
-                  ),
-                ),
-                SizedBox(height: 20.h),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    const WileToneImageWidget(
-                      image: AppIconAssets.googleIcon,
-                      imageType: ImageType.png,
-                      scale: 5,
-                    ),
-                    SizedBox(
-                      width: 10.w,
-                    ),
-                    const WileToneImageWidget(
-                      image: AppIconAssets.appleIcon,
-                      imageType: ImageType.png,
-                      scale: 5,
-                    ),
-                  ],
+                const WileToneImageWidget(
+                  image: AppIconAssets.appleIcon,
+                  imageType: ImageType.png,
+                  scale: 5,
                 ),
               ],
             ),
-            // GetBuilder<AuthViewModel>(
-            //     tag: AuthViewModel().toString(),
-            //     builder: (controller){
-            //       if(controller.sendOtpApiResponse.status == Status.LOADING){
-            //         return CircularProgressIndicator();
-            //       }
-            //       return SizedBox();
-            //     } ),
           ],
         ),
       ),

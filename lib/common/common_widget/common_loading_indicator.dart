@@ -11,7 +11,7 @@ Container postDataLoadingIndicator({Color? color}) {
   return Container(
       height: Get.height,
       width: Get.width,
-      color: color ?? ColorUtils.black,
+      // color: color ?? ColorUtils.greyE6,
       child: getDataLoadingIndicator());
 }
 

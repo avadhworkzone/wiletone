@@ -20,6 +20,8 @@ class WileToneAppBar extends StatelessWidget {
           onPressed: onPressed ??
               () {
                 Get.back();
+
+
               },
         ),
         WileToneTextWidget(

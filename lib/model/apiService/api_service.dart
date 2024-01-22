@@ -129,7 +129,7 @@ class ApiService extends BaseService {
       Map<String, dynamic>? body,
       bool fileUpload = false}) async {
     try {
-      log("URL ---> ${Uri.parse(baseURL + url!)}");
+      log("URL ---> ${Uri.parse(baseURL + url)}");
 
       ///------------------------------------ GET METHOD -------------------------------------///
       if (apiType == APIType.aGet) {
