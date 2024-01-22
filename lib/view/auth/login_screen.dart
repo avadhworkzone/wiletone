@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -242,7 +243,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     if (res.code == 200) {
                       Get.back();
                       SnackBarUtils.snackBar(
-                          message: res.message ?? "OTP Sent Successfully...");
+                          message: res.message ?? VariablesUtils.otpSentSuccessfully);
 
                       Get.to(() => OtpVerificationScreen(
                                 phoneNumber: phoneController.text,
@@ -327,10 +328,11 @@ class _LoginScreenState extends State<LoginScreen> {
         barrierDismissible: false,
       );
       final user = await SocialAuthServices.signInWithGoogle();
-      print('GOOGLE LOGIN USER =>${user?.email}');
+      log('GOOGLE LOGIN USER =>${user?.email}');
       if (user == null) {
+        Get.back();
         SnackBarUtils.snackBar(
-          message: "Google login failed, please try again",
+          message: VariablesUtils.googleLoginFailed,
           bgColor: ColorUtils.red,
         );
         return;
@@ -338,12 +340,12 @@ class _LoginScreenState extends State<LoginScreen> {
       final body = {
         "email": user.email,
       };
-      print('GOOGLE body =>${jsonEncode(body)}');
+      log('GOOGLE body =>${jsonEncode(body)}');
 
       String encryptedToken = AESService.encryptAES(
         jsonEncode(body),
       );
-      print('GOOGLE encryptedToken =>$encryptedToken');
+      log('GOOGLE encryptedToken =>$encryptedToken');
 
       await authViewModel.socialLogin(encryptedToken);
       if (authViewModel.socialLoginApiResponse.status == Status.COMPLETE) {
@@ -358,17 +360,17 @@ class _LoginScreenState extends State<LoginScreen> {
         } else {
           Get.back();
           SnackBarUtils.snackBar(
-              message: res.message ?? "Something Went Wrong...",
+              message: res.message ?? VariablesUtils.somethingWentWrong,
               bgColor: ColorUtils.red);
         }
       } else {
         Get.back();
         SnackBarUtils.snackBar(
-            message: "Something Went Wrong...", bgColor: ColorUtils.red);
+            message: VariablesUtils.somethingWentWrong, bgColor: ColorUtils.red);
       }
     } catch (e) {
       Get.back();
-      print('SOCIAL LOGIN ERROR :=> $e');
+      log('SOCIAL LOGIN ERROR :=> $e');
     }
   }
 }
