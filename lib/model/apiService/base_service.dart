@@ -4,12 +4,11 @@ abstract class BaseService {
 
   /// =============== AUTH APIS ================= ///
 
-  final String sendOtp ="api/restaurant/auth/send-code";
-  final String reSendOtp ="api/restaurant/auth/resend-code";
-  final String verifyOtp ="api/restaurant/auth/verify-code";
+  final String sendOtp = "api/restaurant/auth/send-code";
+  final String reSendOtp = "api/restaurant/auth/resend-code";
+  final String verifyOtp = "api/restaurant/auth/verify-code";
+  final String socialLogin = "api/restaurant/auth/social-login";
 
   /// =============== STORE ================= ///
-  final String store="api/restaurant/auth/store";
-
-
+  final String store = "api/restaurant/auth/store";
 }

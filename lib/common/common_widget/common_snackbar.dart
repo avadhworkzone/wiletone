@@ -6,7 +6,7 @@ import '../../utils/color_utils.dart';
 
 class SnackBarUtils {
   static fieldFocusChange(
-      BuildContext context, FocusNode current, FocusNode nextFocus){
+      BuildContext context, FocusNode current, FocusNode nextFocus) {
     current.unfocus();
     FocusScope.of(context).requestFocus(nextFocus);
   }
@@ -25,8 +25,7 @@ class SnackBarUtils {
         gravity: ToastGravity.CENTER);
   }
 
-  static snackBar({ required String message, Color? bgColor}){
-
+  static snackBar({required String message, Color? bgColor}) {
     // Get.snackbar(title, message,snackPosition: SnackPosition.BOTTOM);
     Get.rawSnackbar(
       message: message,
@@ -38,5 +37,4 @@ class SnackBarUtils {
       backgroundColor: bgColor ?? ColorUtils.greenColor,
     );
   }
-
 }

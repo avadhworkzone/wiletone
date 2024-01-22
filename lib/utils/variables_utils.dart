@@ -1,5 +1,5 @@
 class VariablesUtils {
-  static const appName = 'WileTone';
+  static const appName = 'Zura Restaurant';
 
   /// ==================== DASH BOARD ==================== ///
   static const totalSales = "Total Sales";

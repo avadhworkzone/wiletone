@@ -5,6 +5,7 @@ import 'package:wilatone_restaurant/model/repo/auth_repo.dart';
 class AuthViewModel extends GetxController {
   ApiResponse sendOtpApiResponse = ApiResponse.initial('INITIAL');
   ApiResponse verifyOtpApiResponse = ApiResponse.initial('INITIAL');
+  ApiResponse socialLoginApiResponse = ApiResponse.initial('INITIAL');
 
   /// SEND OTP
   Future<void> sendOtp(String phoneNumber, bool isSendAPI) async {
@@ -30,6 +31,20 @@ class AuthViewModel extends GetxController {
     } catch (e) {
       print('sendOtpApiResponse ERROR  :=>$e');
       verifyOtpApiResponse = ApiResponse.error('ERROR');
+    }
+    update();
+  }
+
+  /// SOCIAL LOGIN
+  Future<void> socialLogin(String encryptedData) async {
+    socialLoginApiResponse = ApiResponse.loading('Loading');
+    update();
+    try {
+      final response = await AuthRepo().socialLoginRepo(encryptedData);
+      socialLoginApiResponse = ApiResponse.complete(response);
+    } catch (e) {
+      print('socialLoginApiResponse ERROR  :=>$e');
+      socialLoginApiResponse = ApiResponse.error('ERROR');
     }
     update();
   }
