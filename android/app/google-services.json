@@ -1,0 +1,100 @@
+{
+  "project_info": {
+    "project_number": "302500815453",
+    "project_id": "zura-3487e",
+    "storage_bucket": "zura-3487e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302500815453:android:d49316980aa94887b9a3b4",
+        "android_client_info": {
+          "package_name": "com.example.wilatone_restaurant"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302500815453-104gc59u16r92396lsi4q8om93edp8cl.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wilatone_restaurant",
+            "certificate_hash": "671d8d6bfd9e75131287c7c219163f877574bef9"
+          }
+        },
+        {
+          "client_id": "302500815453-7qtrt7chbe8iddmns3q0ns8paliv1l1h.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.wilatone_restaurant",
+            "certificate_hash": "bb0c444136713ed8d82417e4f1b845a23b9fe218"
+          }
+        },
+        {
+          "client_id": "302500815453-6hsq4ao2uhlb9qup8ok0qktjglpp0bdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxoDQGqGzWfKAjW-jqzwdnjaXouzXjluE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302500815453-6hsq4ao2uhlb9qup8ok0qktjglpp0bdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:302500815453:android:3c5372d024177aaeb9a3b4",
+        "android_client_info": {
+          "package_name": "com.example.zura_customer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "302500815453-4c2541q7tr41j67t3tnmdmkea9hr04o6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zura_customer",
+            "certificate_hash": "abb81f33c29b82b2ccec8aa69ca165da36c1e45c"
+          }
+        },
+        {
+          "client_id": "302500815453-pkeqcirreqb5725gaa0ng1ji69g0f6qb.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.zura_customer",
+            "certificate_hash": "bb0c444136713ed8d82417e4f1b845a23b9fe218"
+          }
+        },
+        {
+          "client_id": "302500815453-6hsq4ao2uhlb9qup8ok0qktjglpp0bdk.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxoDQGqGzWfKAjW-jqzwdnjaXouzXjluE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "302500815453-6hsq4ao2uhlb9qup8ok0qktjglpp0bdk.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

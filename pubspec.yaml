@@ -31,9 +31,23 @@ dependencies:
   intl_phone_field:
     path: packages/intl_phone_field-master
 
+  # ENCRYPTION
+  encrypt: ^5.0.3
+  tuple: ^2.0.2
+  crypto: ^3.0.1
+
+  # FIREBASE
+  firebase_core: ^2.24.2
+  firebase_auth: ^4.16.0
+
+  # SOCIAL LOGIN
+  google_sign_in: ^6.2.1
+
   #charts
   fl_chart: ^0.66.0
   syncfusion_flutter_charts:
+
+
 
 dev_dependencies:
   flutter_test:

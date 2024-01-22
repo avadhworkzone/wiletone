@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -5,6 +7,8 @@ import 'package:intl_phone_field/intl_phone_field.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_image_widget.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
+import 'package:wilatone_restaurant/service/encrypt_service.dart';
+import 'package:wilatone_restaurant/service/social_auth_service.dart';
 import 'package:wilatone_restaurant/utils/app_icon_assets.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
@@ -195,7 +199,7 @@ class _LoginScreenState extends State<LoginScreen> {
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: WileToneCustomButton(
                 onPressed: () {
-                  Get.to(OtpVerificationScreen());
+                  Get.to(const OtpVerificationScreen());
                 },
                 buttonHeight: 52,
                 buttonColor: ColorUtils.greenColor,
@@ -237,10 +241,13 @@ class _LoginScreenState extends State<LoginScreen> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const WileToneImageWidget(
-                  image: AppIconAssets.googleIcon,
-                  imageType: ImageType.png,
-                  scale: 5,
+                InkWell(
+                  onTap: onGoogleLoginTap,
+                  child: const WileToneImageWidget(
+                    image: AppIconAssets.googleIcon,
+                    imageType: ImageType.png,
+                    scale: 5,
+                  ),
                 ),
                 SizedBox(
                   width: 10.w,
@@ -256,5 +263,23 @@ class _LoginScreenState extends State<LoginScreen> {
         ),
       ),
     );
+  }
+
+  Future<void> onGoogleLoginTap() async {
+    final user = await SocialAuthServices.signInWithGoogle();
+    print('GOOGLE LOGIN USER =>${user?.email}');
+    if (user == null) {
+      // commonSnackBar(message: "Google login failed, please try again");
+      return;
+    }
+    final body = {
+      "email": user.email,
+    };
+    print('GOOGLE body =>${jsonEncode(body)}');
+
+    String encryptedToken = AESService.encryptAES(
+      jsonEncode(body),
+    );
+    print('GOOGLE encryptedToken =>$encryptedToken');
   }
 }
