@@ -524,9 +524,11 @@ class _IntlPhoneFieldState extends State<IntlPhoneField> {
                 //         ),
                 // ],
                 FittedBox(
+
                   child: Text(
                     '+${_selectedCountry.dialCode}',
                     style: widget.dropdownTextStyle,
+
                   ),
                 ),
                 // if (widget.enabled &&

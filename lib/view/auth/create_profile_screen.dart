@@ -10,6 +10,8 @@ import 'package:wilatone_restaurant/utils/validations_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/dashboard/dashboard.dart';
 
+import '../../viewModel/auth_view_model.dart';
+
 class CreateProfileScreen extends StatefulWidget {
   const CreateProfileScreen({Key? key}) : super(key: key);
 
@@ -18,6 +20,11 @@ class CreateProfileScreen extends StatefulWidget {
 }
 
 class _CreateProfileScreenState extends State<CreateProfileScreen> {
+
+  final AuthViewModel authViewModel = Get.find<AuthViewModel>();
+  final ownerNameController = TextEditingController();
+  final ownerMobileController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -42,6 +49,7 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
             WileToneTextFormField(
               hintText: VariablesUtils.ownerName,
               regularExpression: RegularExpression.alphabetSpacePattern,
+
             ),
             SizedBox(
               height: 20.h,
@@ -55,7 +63,8 @@ class _CreateProfileScreenState extends State<CreateProfileScreen> {
               height: 30.h,
             ),
             WileToneCustomButton(
-              onPressed: () {
+              onPressed: () async{
+                
                 Get.to(() => DashBoard());
               },
               buttonHeight: 52,

@@ -43,6 +43,18 @@ class _LoginScreenState extends State<LoginScreen> {
 
   final AuthViewModel authViewModel = Get.find<AuthViewModel>();
 
+  // @override
+  // void initState() {
+  //   super.initState();
+  //
+  //   // Check if the user is already logged in
+  //   if (PreferenceManagerUtils.getIsLogin()) {
+  //     // User is logged in, navigate to DashboardScreen
+  //     Future.delayed(Duration.zero, () {
+  //       Get.off(() => DashBoard());
+  //     });
+  //   }
+  // }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -236,10 +248,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     postDataLoadingIndicator(),
                     barrierDismissible: false,
                   );
-                  await authViewModel.sendOtp(dialCode + phoneNumber, true);
+                  await authViewModel.sendOtp(phoneNumber, true);
+                 log('====Sending OTP for Phone Number: $phoneNumber');
                   if (authViewModel.sendOtpApiResponse.status ==
                       Status.COMPLETE) {
                     SendOtpResModel res = authViewModel.sendOtpApiResponse.data;
+                    log('====Send OTP Response: ${res.message}');
                     if (res.code == 200) {
                       Get.back();
                       SnackBarUtils.snackBar(

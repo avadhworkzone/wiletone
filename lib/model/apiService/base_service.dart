@@ -11,4 +11,7 @@ abstract class BaseService {
 
   /// =============== STORE ================= ///
   final String store = "api/restaurant/auth/store";
+
+  /// ============ UPDATE PROFILE ============= ///
+  final String updateProfile = "api/restaurant/auth/update-profile";
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:wilatone_restaurant/common/common_widget/common_back_button.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_app_bar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_custom_button.dart';
@@ -9,9 +10,17 @@ import 'package:wilatone_restaurant/utils/font_style_utils.dart';
 import 'package:wilatone_restaurant/utils/size_config_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 
-class ProfileDetailScreen extends StatelessWidget {
+import '../viewModel/auth_view_model.dart';
+
+class ProfileDetailScreen extends StatefulWidget {
   const ProfileDetailScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ProfileDetailScreen> createState() => _ProfileDetailScreenState();
+}
+
+class _ProfileDetailScreenState extends State<ProfileDetailScreen> {
+  final AuthViewModel authViewModel = Get.find<AuthViewModel>();
   @override
   Widget build(BuildContext context) {
     return Material(
@@ -87,7 +96,9 @@ class ProfileDetailScreen extends StatelessWidget {
                 ),
               ),
               WileToneCustomButton(
-                onPressed: () {},
+                onPressed: () async{
+
+                },
                 buttonName: VariablesUtils.update,
                 fontSize: 16,
               ),

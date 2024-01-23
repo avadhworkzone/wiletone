@@ -113,16 +113,17 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 padding: EdgeInsets.symmetric(vertical: 3.w),
                 child: Pinput(
                   closeKeyboardWhenCompleted: true,
-                  length: 4,
+                  length: 6,
                   autofocus: true,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter Otp';
-                    } else if (value.length != 4) {
-                      return 'OTP must be 4 digits';
+                    } else if (value.length != 6) {
+                      return 'OTP must be 6 digits';
                     }
                     return null;
                   },
+
                   controller: otpEditController,
                   keyboardType: const TextInputType.numberWithOptions(
                       signed: true, decimal: true),
@@ -173,6 +174,8 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       border: Border.all(color: ColorUtils.grey5B, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
+
+
                   ),
                 ),
               ),
@@ -245,23 +248,31 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
               InkWell(
                 onTap: () async {
                   if (otpEditController.text.isEmpty) {
-
                     SnackBarUtils.snackBar(message:  VariablesUtils.enterOtp,bgColor: ColorUtils.red);
-                  } else {
+                 return;
+                  }
 
-                    await authViewModel.verifyOtp(widget.phoneNumber, otpEditController.text);
-                    if (authViewModel.verifyOtpApiResponse.status == Status.COMPLETE) {
-                      VerifyOtpResModel res =
-                          authViewModel.verifyOtpApiResponse.data;
-                      if (res.code == 200) {
-                        Get.to(() => const CreateProfileScreen());
-                        log('======${res.message}');
-                        SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.mobileVerified);
-                      } else {
-                        SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.invalidOtp);
-                      }
+                  Get.dialog(
+                    postDataLoadingIndicator(),
+                    barrierDismissible: false,
+                  );
+
+                  await authViewModel.verifyOtp( otpEditController.text,widget.phoneNumber);
+                  if (authViewModel.verifyOtpApiResponse.status == Status.COMPLETE) {
+                    VerifyOtpResModel res =
+                        authViewModel.verifyOtpApiResponse.data;
+                    if (res.code == 200) {
+                      Get.back();
+
+                      SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.mobileVerified);
+                      Get.to(() => const CreateProfileScreen());
+                      log('======${res.message}');
+                    } else {
+                      Get.back();
+                      SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.invalidOtp);
                     }
                   }
+
                 },
                 child: WileToneTextWidget(
                   title: VariablesUtils.goBackToLoginMethods,

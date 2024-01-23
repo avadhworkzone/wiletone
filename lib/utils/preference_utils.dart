@@ -3,29 +3,34 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class PreferenceManagerUtils {
   static final getStorage = GetStorage();
-  static late SharedPreferences _preferences;
 
-  static Future<void> init() async {
-    _preferences = await SharedPreferences.getInstance();
-  }
   static String dialCode = 'dialCode';
   static String countryCode = "countryCode";
   static String allCountryCurrency = "countryCode";
   static String countryName = "countryName";
-  static String userToken = "userToken";
 
-  static Future<void> initPreferences() async {
-    _preferences = await SharedPreferences.getInstance();
+
+  static String token = 'token';
+  static String login = 'login';
+
+  ///Check UserLogin
+  static Future setIsLogin(bool val) async {
+    await getStorage.write(login, val);
   }
 
-  ///setUserToken
-  static Future<void> setUserToken(String value) async {
-    await _preferences.setString(userToken, value);
+  static bool getIsLogin() {
+    return getStorage.read(login) ?? false;
   }
 
-  static String? getUserToken() {
-    return _preferences.getString(userToken) ;
+  ///Get Token
+  static Future setToken(String val) async {
+    await getStorage.write(token, val);
   }
+
+  static getToken() {
+    return getStorage.read(token) ?? '';
+  }
+
 
   ///setCountryName
   static Future setCountryName(String value) async {
@@ -43,5 +48,9 @@ class PreferenceManagerUtils {
 
   static String getCountryCode() {
     return getStorage.read(countryCode) ?? "91";
+  }
+
+  static Future<void> clearData() async {
+    await getStorage.erase();
   }
 }

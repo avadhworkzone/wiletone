@@ -129,12 +129,14 @@ class ApiService extends BaseService {
       Map<String, dynamic>? body,
       bool fileUpload = false}) async {
     try {
+      log('REQ BODY :=>${jsonEncode(body)}');
       log("URL ---> ${Uri.parse(baseURL + url)}");
 
       ///------------------------------------ GET METHOD -------------------------------------///
       if (apiType == APIType.aGet) {
         var result = await http.get(
-          Uri.parse(baseURL + url), /* headers: headerTokenGet*/
+          Uri.parse(baseURL + url),
+          headers: withToken ? header(status: APIHeaderType.onlyToken) : null,/* headers: headerTokenGet*/
         );
         response = returnResponse(
           result.statusCode,
@@ -182,7 +184,9 @@ class ApiService extends BaseService {
         String encodeBody = jsonEncode(body);
         var result = await http.post(
           Uri.parse(baseURL + url),
-          headers: header(status: withToken?APIHeaderType.jsonBodyWithToken:null),
+          // headers: header(status: withToken?APIHeaderType.jsonBodyWithToken:null),
+          headers: header(
+              status: withToken ? APIHeaderType.jsonBodyWithToken : null),
           body: encodeBody,
         );
         response = returnResponse(result.statusCode, result.body);
