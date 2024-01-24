@@ -9,13 +9,15 @@ import 'package:get/get.dart';
 import 'package:pinput/pinput.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_app_bar.dart';
 import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.dart';
-import 'package:wilatone_restaurant/model/apiModel/responseModel/send_otp_res_model.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/common_res_model.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/verify_otp_res_model.dart';
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
+import 'package:wilatone_restaurant/utils/const_utils.dart';
+import 'package:wilatone_restaurant/utils/preference_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/auth/create_profile_screen.dart';
-
+import 'package:wilatone_restaurant/view/dashboard/dashboard.dart';
 
 import '../../common/common_widget/common_loading_indicator.dart';
 import '../../common/common_widget/common_snackbar.dart';
@@ -123,7 +125,6 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                     }
                     return null;
                   },
-
                   controller: otpEditController,
                   keyboardType: const TextInputType.numberWithOptions(
                       signed: true, decimal: true),
@@ -174,9 +175,10 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                       border: Border.all(color: ColorUtils.grey5B, width: 1),
                       borderRadius: BorderRadius.circular(10),
                     ),
-
-
                   ),
+                  onCompleted: (String otp){
+                    onTap();
+                  },
                 ),
               ),
               SizedBox(
@@ -197,30 +199,34 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                             text: VariablesUtils.resendSMSIn,
                             recognizer: TapGestureRecognizer()
                               ..onTap = () async {
+                                otpEditController.clear();
                                 FocusManager.instance.primaryFocus?.unfocus();
-                                Get.dialog(
-                                  postDataLoadingIndicator(),
-                                  barrierDismissible: false,
-                                );
-                                await authViewModel.sendOtp(widget.phoneNumber,false);
+                                ConstUtils.showLoader();
+                                await authViewModel.sendOtp(
+                                    widget.phoneNumber, false);
                                 if (authViewModel.sendOtpApiResponse.status ==
                                     Status.COMPLETE) {
-                                  SendOtpResModel res =
+                                  CommonResModel res =
                                       authViewModel.sendOtpApiResponse.data;
                                   log('RES CODE ==>${res.code}');
                                   if (res.code == 200) {
-                                    Get.back();
+                                    ConstUtils.closeLoader();
                                     currentSeconds = 30;
                                     startTimeout();
 
                                     log('======${res.message}');
-                                    SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.otpResentSuccessfully);
+                                    SnackBarUtils.snackBar(
+                                        message: res.message ??
+                                            VariablesUtils
+                                                .otpResentSuccessfully);
                                   } else {
-                                    Get.back();
-                                    SnackBarUtils.snackBar( message: res.message ?? VariablesUtils.resendOtpFailed,bgColor: ColorUtils.red);
+                                    ConstUtils.closeLoader();
+                                    SnackBarUtils.snackBar(
+                                        message: res.message ??
+                                            VariablesUtils.resendOtpFailed,
+                                        bgColor: ColorUtils.red);
                                   }
                                 }
-
                               },
                             style: TextStyle(
                                 fontSize: 12.sp,
@@ -228,17 +234,14 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                                 color: ColorUtils.greyAC,
                                 fontFamily: AssetsUtils.poppins),
                           )
-                        : const TextSpan(),
-                    currentSeconds != 0
-                        ? TextSpan(
-                            text: formatHHMMSS(currentSeconds),
+                        : TextSpan(
+                            text: ConstUtils.formatHHMMSS(currentSeconds),
                             style: TextStyle(
                                 fontSize: 12.sp,
                                 fontWeight: FontWeight.w500,
                                 color: ColorUtils.greyAC,
                                 fontFamily: AssetsUtils.poppins),
-                          )
-                        : const TextSpan(text: ""),
+                          ),
                   ],
                 ),
               ),
@@ -246,34 +249,7 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
                 height: 10.h,
               ),
               InkWell(
-                onTap: () async {
-                  if (otpEditController.text.isEmpty) {
-                    SnackBarUtils.snackBar(message:  VariablesUtils.enterOtp,bgColor: ColorUtils.red);
-                 return;
-                  }
-
-                  Get.dialog(
-                    postDataLoadingIndicator(),
-                    barrierDismissible: false,
-                  );
-
-                  await authViewModel.verifyOtp( otpEditController.text,widget.phoneNumber);
-                  if (authViewModel.verifyOtpApiResponse.status == Status.COMPLETE) {
-                    VerifyOtpResModel res =
-                        authViewModel.verifyOtpApiResponse.data;
-                    if (res.code == 200) {
-                      Get.back();
-
-                      SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.mobileVerified);
-                      Get.to(() => const CreateProfileScreen());
-                      log('======${res.message}');
-                    } else {
-                      Get.back();
-                      SnackBarUtils.snackBar( message:  res.message ?? VariablesUtils.invalidOtp);
-                    }
-                  }
-
-                },
+                onTap: onTap,
                 child: WileToneTextWidget(
                   title: VariablesUtils.goBackToLoginMethods,
                   color: ColorUtils.greenColor,
@@ -288,19 +264,45 @@ class _OtpVerificationScreenState extends State<OtpVerificationScreen> {
     );
   }
 
-  String formatHHMMSS(int seconds) {
-    int hours = (seconds / 3600).truncate();
-    seconds = (seconds % 3600).truncate();
-    int minutes = (seconds / 60).truncate();
-
-    String hoursStr = (hours).toString().padLeft(2, '0');
-    String minutesStr = (minutes).toString().padLeft(2, '0');
-    String secondsStr = (seconds % 60).toString().padLeft(2, '0');
-
-    if (hours == 0) {
-      return "$minutesStr:$secondsStr";
+  Future<void> onTap() async {
+    FocusScope.of(context).unfocus();
+    if (otpEditController.text.isEmpty) {
+      SnackBarUtils.snackBar(
+          message: VariablesUtils.enterOtp, bgColor: ColorUtils.red);
+      return;
     }
 
-    return "$hoursStr:$minutesStr:$secondsStr";
+    ConstUtils.showLoader();
+
+    await authViewModel.verifyOtp(otpEditController.text, widget.phoneNumber);
+    ConstUtils.closeLoader();
+    if (authViewModel.verifyOtpApiResponse.status == Status.COMPLETE) {
+      VerifyOtpResModel res = authViewModel.verifyOtpApiResponse.data;
+      if (res.code == 200) {
+        SnackBarUtils.snackBar(
+            message: res.message ?? VariablesUtils.mobileVerified);
+        await setUserDataInStorage(res.data!);
+        if ((res.data?.ownerName?.isNotEmpty) == true ||
+            (res.data?.ownerName?.isNotEmpty) == true) {
+          Get.offAll(() => DashBoard());
+        } else {
+          Get.offAll(() => const CreateProfileScreen());
+        }
+      } else {
+        SnackBarUtils.snackBar(
+            message: res.message ?? VariablesUtils.invalidOtp);
+      }
+    } else {
+      SnackBarUtils.snackBar(message: VariablesUtils.somethingWentWrong);
+    }
+  }
+
+  Future<void> setUserDataInStorage(VerifyOtpData res) async {
+    await PreferenceUtils.setString(
+        key: PreferenceUtils.accessToken, value: res.accessToken ?? "");
+    await PreferenceUtils.setString(
+        key: PreferenceUtils.ownerMobile, value: res.ownerMobile ?? "");
+    await PreferenceUtils.setString(
+        key: PreferenceUtils.ownerName, value: res.ownerName ?? "");
   }
 }

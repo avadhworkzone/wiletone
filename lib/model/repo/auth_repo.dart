@@ -1,17 +1,15 @@
 import 'dart:developer';
 
-import 'package:wilatone_restaurant/model/apiModel/responseModel/send_otp_res_model.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/common_res_model.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/social_login_res_model.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/verify_otp_res_model.dart';
 import 'package:wilatone_restaurant/model/apiService/api_service.dart';
 import 'package:wilatone_restaurant/model/apiService/base_service.dart';
 import 'package:wilatone_restaurant/utils/enum_utils.dart';
 
-import '../apiModel/responseModel/update_profile_res_model.dart';
-
 class AuthRepo extends BaseService {
   /// ============================= SEND OTP  ============================== ///
-  Future<SendOtpResModel> sendOtpRepo(String pNumber, bool isSendAPI) async {
+  Future<CommonResModel> sendOtpRepo(String pNumber, bool isSendAPI) async {
     Map<String, dynamic> body = {
       "mobile": pNumber,
     };
@@ -21,7 +19,7 @@ class AuthRepo extends BaseService {
         body: body,
         url: isSendAPI ? sendOtp : reSendOtp);
     log("=============RES:=========$response");
-    SendOtpResModel result = SendOtpResModel.fromJson(response);
+    CommonResModel result = CommonResModel.fromJson(response);
     return result;
   }
 
@@ -55,16 +53,16 @@ class AuthRepo extends BaseService {
   }
 
   /// =============================  UPDATE PROFILE  ============================== ///
-  Future<UpdateProfileResModel> updateProfileRepo(String ownerName,String ownerNumber,) async {
+  Future<CommonResModel> updateProfileRepo(String ownerName,String ownerNumber,) async {
     Map<String, dynamic> body = {
      "owner_name": ownerName,
      "owner_mobile": ownerNumber,
     };
     var response = await ApiService().getResponse(
-        apiType: APIType.aPost, withToken: true, body: body, url: updateProfile);
+        apiType: APIType.aPost,  body: body, url: updateProfile);
 
     log("=============RES:=========$response");
-    UpdateProfileResModel result = UpdateProfileResModel.fromJson(response);
+    CommonResModel result = CommonResModel.fromJson(response);
 
     return result;
   }

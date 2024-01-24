@@ -1,53 +1,29 @@
 import 'package:get_storage/get_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class PreferenceManagerUtils {
+class PreferenceUtils {
   static final getStorage = GetStorage();
 
-  static String dialCode = 'dialCode';
-  static String countryCode = "countryCode";
-  static String allCountryCurrency = "countryCode";
-  static String countryName = "countryName";
+  static String accessToken = 'ACCESS_TOKEN';
+  static String ownerName = 'OWNER_NAME';
+  static String ownerMobile = 'OWNER_MOBILE';
 
-
-  static String token = 'token';
-  static String login = 'login';
-
-  ///Check UserLogin
-  static Future setIsLogin(bool val) async {
-    await getStorage.write(login, val);
+  /// ================== SET STRING VALUE ================== ///
+  static Future<void> setString({required String key, required String value}) async {
+    await getStorage.write(key, value);
   }
 
-  static bool getIsLogin() {
-    return getStorage.read(login) ?? false;
+  static String getString(String key) {
+    return getStorage.read(key) ?? "";
   }
 
-  ///Get Token
-  static Future setToken(String val) async {
-    await getStorage.write(token, val);
+  /// ================== SET BOOL VALUE ================== ///
+  static Future<void> setBool({required String key, required bool value}) async {
+    await getStorage.write(key, value);
   }
 
-  static getToken() {
-    return getStorage.read(token) ?? '';
-  }
-
-
-  ///setCountryName
-  static Future setCountryName(String value) async {
-    await getStorage.write(countryName, value);
-  }
-
-  static String getCountryName() {
-    return getStorage.read(countryName) ?? "IN";
-  }
-
-  ///setCountryCode
-  static Future setCountryCode(String value) async {
-    await getStorage.write(countryCode, value);
-  }
-
-  static String getCountryCode() {
-    return getStorage.read(countryCode) ?? "91";
+  static  bool getBool(String key) {
+    return getStorage.read(key) ?? false;
   }
 
   static Future<void> clearData() async {

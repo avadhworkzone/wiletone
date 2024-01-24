@@ -6,6 +6,7 @@ import 'package:wilatone_restaurant/common/common_widget/wiletone_text_widget.da
 import 'package:wilatone_restaurant/utils/assets/assets_utils.dart';
 import 'package:wilatone_restaurant/utils/color_utils.dart';
 import 'package:wilatone_restaurant/utils/font_style_utils.dart';
+import 'package:wilatone_restaurant/utils/preference_utils.dart';
 import 'package:wilatone_restaurant/utils/size_config_utils.dart';
 import 'package:wilatone_restaurant/utils/variables_utils.dart';
 import 'package:wilatone_restaurant/view/all_order_screen.dart';
@@ -140,7 +141,8 @@ class CustomDrawer extends StatelessWidget {
             ),
             const Spacer(),
             WileToneCustomButton(
-              onPressed: () {
+              onPressed: () async {
+                await PreferenceUtils.clearData();
                 Get.offAll(() => const LoginScreen());
               },
               icon: Padding(

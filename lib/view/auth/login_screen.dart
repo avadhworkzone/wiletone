@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -26,7 +25,7 @@ import 'package:wilatone_restaurant/view/dashboard/dashboard.dart';
 import 'package:wilatone_restaurant/view/general/wilestone_web_view.dart';
 
 import '../../common/common_widget/common_loading_indicator.dart';
-import '../../model/apiModel/responseModel/send_otp_res_model.dart';
+import '../../model/apiModel/responseModel/common_res_model.dart';
 import '../../model/apis/api_response.dart';
 import '../../viewModel/auth_view_model.dart';
 
@@ -190,11 +189,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       fontWeight: FontWeight.w600,
                       fontFamily: AssetsUtils.poppins),
                   errorBorder: OutlineInputBorder(
-
-                      borderSide:
-                          const BorderSide(color: ColorUtils.red, width: 1),
-                      borderRadius: BorderRadius.circular(12),
-
+                    borderSide:
+                        const BorderSide(color: ColorUtils.red, width: 1),
+                    borderRadius: BorderRadius.circular(12),
                   ),
                   focusedBorder: OutlineInputBorder(
                       borderSide: const BorderSide(
@@ -211,7 +208,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 cursorColor: ColorUtils.grey5B,
                 disableLengthCheck: false,
-
                 initialCountryCode: 'IN',
                 dropdownIconPosition: IconPosition.trailing,
                 flagsButtonPadding: EdgeInsets.only(left: 2.w),
@@ -222,9 +218,6 @@ class _LoginScreenState extends State<LoginScreen> {
                 },
                 onCountryChanged: (phone) async {
                   dialCode = phone.dialCode.toString();
-                  logs("=====Code ${phone.dialCode}");
-                  await PreferenceManagerUtils.setCountryCode(dialCode);
-                  await PreferenceManagerUtils.setCountryName(phone.code);
                 },
               ),
             ),
@@ -234,43 +227,7 @@ class _LoginScreenState extends State<LoginScreen> {
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: WileToneCustomButton(
-                onPressed: () async {
-                  FocusManager.instance.primaryFocus?.unfocus();
-                  if (phoneController.text.isEmpty) {
-                    SnackBarUtils.snackBar(
-                      message: VariablesUtils.enterMobileNumber,
-                      bgColor: ColorUtils.red,
-                    );
-                    return;
-                  }
-
-                  Get.dialog(
-                    postDataLoadingIndicator(),
-                    barrierDismissible: false,
-                  );
-                  await authViewModel.sendOtp(phoneNumber, true);
-                 log('====Sending OTP for Phone Number: $phoneNumber');
-                  if (authViewModel.sendOtpApiResponse.status ==
-                      Status.COMPLETE) {
-                    SendOtpResModel res = authViewModel.sendOtpApiResponse.data;
-                    log('====Send OTP Response: ${res.message}');
-                    if (res.code == 200) {
-                      Get.back();
-                      SnackBarUtils.snackBar(
-                          message: res.message ?? VariablesUtils.otpSentSuccessfully);
-
-                      Get.to(() => OtpVerificationScreen(
-                                phoneNumber: phoneController.text,
-                                countyCode: dialCode.isEmpty ? '91' : dialCode,
-                              ))!
-                          .then((value) => phoneController.clear());
-                    } else {
-                      Get.back();
-                      SnackBarUtils.snackBar( message: res.message ?? VariablesUtils.somethingWentWrong,bgColor: ColorUtils.red);
-
-                    }
-                  }
-                },
+                onPressed: continueOnTap,
                 buttonHeight: 52,
                 buttonColor: ColorUtils.greenColor,
                 buttonName: VariablesUtils.continueText,
@@ -335,55 +292,82 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 
+  Future<void> continueOnTap() async {
+    FocusManager.instance.primaryFocus?.unfocus();
+    if (phoneController.text.isEmpty) {
+      SnackBarUtils.snackBar(
+        message: VariablesUtils.enterMobileNumber,
+        bgColor: ColorUtils.red,
+      );
+      return;
+    }
+
+    ConstUtils.showLoader();
+    await authViewModel.sendOtp(phoneNumber, true);
+    log('====Sending OTP for Phone Number: $phoneNumber');
+    if (authViewModel.sendOtpApiResponse.status == Status.COMPLETE) {
+      CommonResModel res = authViewModel.sendOtpApiResponse.data;
+      log('====Send OTP Response: ${res.message}');
+      if (res.code == 200) {
+        ConstUtils.closeLoader();
+        SnackBarUtils.snackBar(
+            message: res.message ?? VariablesUtils.otpSentSuccessfully);
+        Get.to(() => OtpVerificationScreen(
+                  phoneNumber: phoneController.text,
+                  countyCode: dialCode.isEmpty ? '91' : dialCode,
+                ))!
+            .then((value) => phoneController.clear());
+      } else {
+        ConstUtils.closeLoader();
+        SnackBarUtils.snackBar(
+            message: res.message ?? VariablesUtils.somethingWentWrong,
+            bgColor: ColorUtils.red);
+      }
+    }
+  }
+
   Future<void> onGoogleLoginTap() async {
     try {
-      Get.dialog(
-        postDataLoadingIndicator(),
-        barrierDismissible: false,
-      );
+      ConstUtils.showLoader();
       final user = await SocialAuthServices.signInWithGoogle();
       log('GOOGLE LOGIN USER =>${user?.email}');
       if (user == null) {
-        Get.back();
+        ConstUtils.closeLoader();
         SnackBarUtils.snackBar(
           message: VariablesUtils.googleLoginFailed,
           bgColor: ColorUtils.red,
         );
         return;
       }
-      final body = {
-        "email": user.email,
-      };
-      log('GOOGLE body =>${jsonEncode(body)}');
-
       String encryptedToken = AESService.encryptAES(
-        jsonEncode(body),
+        user.email!,
       );
       log('GOOGLE encryptedToken =>$encryptedToken');
-
       await authViewModel.socialLogin(encryptedToken);
       if (authViewModel.socialLoginApiResponse.status == Status.COMPLETE) {
         SocialLoginResModel res = authViewModel.socialLoginApiResponse.data;
         if (res.code == 200) {
-          Get.back();
+          ConstUtils.closeLoader();
           if (res.data!.isProfileUpdated == true) {
             Get.to(() => const CreateProfileScreen());
           } else {
             Get.to(() => DashBoard());
           }
         } else {
-          Get.back();
+          ConstUtils.closeLoader();
           SnackBarUtils.snackBar(
               message: res.message ?? VariablesUtils.somethingWentWrong,
               bgColor: ColorUtils.red);
         }
-      } else {
-        Get.back();
+      }
+      else {
+        ConstUtils.closeLoader();
         SnackBarUtils.snackBar(
-            message: VariablesUtils.somethingWentWrong, bgColor: ColorUtils.red);
+            message: VariablesUtils.somethingWentWrong,
+            bgColor: ColorUtils.red);
       }
     } catch (e) {
-      Get.back();
+      ConstUtils.closeLoader();
       log('SOCIAL LOGIN ERROR :=> $e');
     }
   }

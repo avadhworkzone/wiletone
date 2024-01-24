@@ -29,7 +29,6 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    bool isUserLoggedIn = PreferenceManagerUtils.getIsLogin();
     return ScreenUtilInit(
       designSize: const Size(390, 844),
       child: GestureDetector(
@@ -41,10 +40,10 @@ class MyApp extends StatelessWidget {
             fontFamily: AssetsUtils.poppins,
           ),
           debugShowCheckedModeBanner: false,
-          // home: isUserLoggedIn ? LoginScreen() : DashBoard(),
-          home: LoginScreen(),
+          home: PreferenceUtils.getString(PreferenceUtils.accessToken).isEmpty
+              ? const LoginScreen()
+              : DashBoard(),
         ),
-
       ),
     );
   }
@@ -52,6 +51,5 @@ class MyApp extends StatelessWidget {
   /// ====================== CONTROLLER INITIALIZATION ============================= ///
   ConnectivityViewModel connectivityViewModel =
       Get.put(ConnectivityViewModel());
-  AuthViewModel authViewModel =
-      Get.put(AuthViewModel());
+  AuthViewModel authViewModel = Get.put(AuthViewModel());
 }

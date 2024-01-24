@@ -1,10 +1,10 @@
-class SendOtpResModel {
-  SendOtpResModel({
+class CommonResModel {
+  CommonResModel({
       this.code, 
       this.message, 
       this.data,});
 
-  SendOtpResModel.fromJson(dynamic json) {
+  CommonResModel.fromJson(dynamic json) {
     code = json['code'];
     message = json['message'];
     data = json['data'];

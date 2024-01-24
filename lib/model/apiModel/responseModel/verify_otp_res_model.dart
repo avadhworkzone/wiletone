@@ -1,14 +1,14 @@
 class VerifyOtpResModel {
   int? code;
   String? message;
-  Data? data;
+  VerifyOtpData? data;
 
   VerifyOtpResModel({this.code, this.message, this.data});
 
   VerifyOtpResModel.fromJson(Map<String, dynamic> json) {
     code = json['code'];
     message = json['message'];
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
+    data = json['data'] != null ? VerifyOtpData.fromJson(json['data']) : null;
   }
 
   Map<String, dynamic> toJson() {
@@ -22,21 +22,21 @@ class VerifyOtpResModel {
   }
 }
 
-class Data {
+class VerifyOtpData {
   bool? isMobileVerified;
   String? accessToken;
   String? ownerName;
   String? ownerMobile;
   bool? isSocial;
 
-  Data(
+  VerifyOtpData(
       {this.isMobileVerified,
         this.accessToken,
         this.ownerName,
         this.ownerMobile,
         this.isSocial});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  VerifyOtpData.fromJson(Map<String, dynamic> json) {
     isMobileVerified = json['is_mobile_verified'];
     accessToken = json['accessToken'];
     ownerName = json['owner_name'];

@@ -51,6 +51,7 @@ class VariablesUtils {
   static const enterMobileNumber = 'Please enter phone number';
   static const enterOtp = 'Please enter OTP';
   static const mobileVerified = 'Mobile verified successfully.';
+  static const profileUpdateSuccessfully = 'profile update successfully.';
   static const invalidOtp = 'Invalid Otp';
   static const googleLoginFailed = 'Google login failed, please try again';
 

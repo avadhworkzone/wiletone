@@ -1,7 +1,7 @@
 import 'dart:developer';
 
 import 'package:wilatone_restaurant/model/apiModel/requestModel/store_req_model.dart';
-import 'package:wilatone_restaurant/model/apiModel/responseModel/send_otp_res_model.dart';
+import 'package:wilatone_restaurant/model/apiModel/responseModel/common_res_model.dart';
 import 'package:wilatone_restaurant/model/apiModel/responseModel/store_res_model.dart';
 import 'package:wilatone_restaurant/model/apiService/api_service.dart';
 import 'package:wilatone_restaurant/model/apiService/base_service.dart';
